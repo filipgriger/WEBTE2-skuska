@@ -223,4 +223,13 @@ class TestController
         $stmt->close();
         return $newStatus;
     }
+
+    public function testExists($testId){
+        $stmt = $this->getConnection()->prepare('select * from tests where id = ?');
+        $stmt->bind_param('i', $testId);
+        $stmt->execute();
+        $test = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $test;
+    }
 }

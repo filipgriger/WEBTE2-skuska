@@ -23,7 +23,7 @@ $(function () {
     function updateContent (button, response){
         let icon = $(button).parent().prev().children().first();
         if (parseInt(response)){
-            $(button).addClass('deactivate-test').removeClass('activate-test');
+            $(button).addClass('deactivate-test').removeClass('activate-test').removeClass('btn-success').addClass('btn-danger');
             $(button).text('Deactivate');
             $(button).attr('data-status', '0');
             icon.removeClass('text-danger')
@@ -31,7 +31,7 @@ $(function () {
                 .addClass('text-success')
                 .addClass('fa-check-circle');
         } else {
-            $(button).addClass('activate-test').removeClass('deactivate-test');
+            $(button).addClass('activate-test').removeClass('deactivate-test').removeClass('btn-danger').addClass('btn-success');
             $(button).text('Activate');
             $(button).attr('data-status', '1');
             icon.removeClass('text-success')

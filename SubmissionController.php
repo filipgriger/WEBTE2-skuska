@@ -270,5 +270,30 @@ class SubmissionController
         return $submissionId;
     }
 
+    public function getTestSubmissions($testId){
+        $q = 'SELECT
+                student_code, `name`, surname,
+                submissions.created_at AS submitted_at,
+                CONCAT(submissions.total_points, "/", tests.total_points) AS points,
+                ifnull(t1.require_action,0) as not_evaluated
+            FROM
+                submissions
+            JOIN tests ON tests.id = submissions.test_id
+            JOIN students ON students.id = submissions.student_id
+            LEFT JOIN( SELECT submission_id, COUNT(submission_id) as require_action FROM answers WHERE points IS NULL GROUP BY submission_id) t1
+            ON t1.submission_id = submissions.id
+            WHERE tests.id = ?';
+
+        $stmt = $this->getConnection()->prepare($q);
+        $stmt->bind_param('i', $testId);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $submissions = array();
+        while ($a = $res->fetch_assoc()){
+            array_push($submissions, $a);
+        }
+        $stmt->close();
+        return $submissions;
+    }
 
 }
