@@ -267,6 +267,7 @@ class SubmissionController
         $stmt->bind_param('ii', $testId, $studentId);
         $stmt->execute();
         $submissionId = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
         return $submissionId;
     }
 
