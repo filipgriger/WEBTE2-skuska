@@ -315,12 +315,9 @@ class SubmissionController
             $this->editAnswerPoints($answerId, $points);
         }
         foreach ($modifications['pair'] as $answerId => $pairs) {
-            $totalPoints = 0;
             foreach ($pairs as $pairAnswerId => $partialPoints) {
-                $this->editPairAnswerPoints($pairAnswerId, $partialPoints);
-                $totalPoints += $partialPoints;
+                $this->editPairAnswerPoints($answerId, $pairAnswerId, $partialPoints);
             }
-            $this->editAnswerPoints($answerId, $totalPoints);
         }
         $this->updateSubmissionPoints($submissionId);
     }
@@ -332,9 +329,13 @@ class SubmissionController
         $stmt->close();
     }
 
-    public function editPairAnswerPoints($answerId, $points){
+    public function editPairAnswerPoints($answerId, $answerPairId, $points){
         $stmt = $this->getConnection()->prepare('update answers_pair set partial_points = ? where id = ?');
-        $stmt->bind_param('di', $points, $answerId);
+        $stmt->bind_param('di', $points, $answerPairId);
+        $stmt->execute();
+        $stmt->close();
+        $stmt = $this->getConnection()->prepare('update answers set answers.points = (select sum(partial_points) from answers_pair where answer_id = ?) where answers.id = ?');
+        $stmt->bind_param('ii', $answerId, $answerId);
         $stmt->execute();
         $stmt->close();
     }

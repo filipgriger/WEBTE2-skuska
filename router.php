@@ -35,6 +35,8 @@ if (isset($_POST)){
             echo $newStatus;
             break;
         case 'editSubmission':
+//            var_dump($_POST['modifications']);
+//            die();
             $submissionController = new SubmissionController();
             $submissionController->editSubmission($_POST['submissionId'], $_POST['modifications']);
             header('Location: teacher/showTestSubmissions.php?testId='.$_POST['testId']);
