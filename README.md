@@ -10,6 +10,16 @@
   cp config-example.php config.php
   ```
 
+## Testovacie data v databaze
+
+- ucitel:
+    * janko@hrasko.com
+    * Heslo123.
+    
+- kod testov:
+    * simple
+    * option
+    * pairs1
 
 ## Ulohy
 
