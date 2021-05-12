@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-var_dump($_SESSION);
-
 include_once 'TestController.php';
 include_once 'SubmissionController.php';
 include_once 'config.php';
@@ -32,5 +30,9 @@ if (isset($_POST)){
             $_SESSION['submissionId'] = $submissionId;
             header('Location: templates/testSubmitted.php');
             exit();
+        case 'updateTestStatus':
+            $testController = new TestController();
+            $newStatus = $testController->updateTestStatus($_POST['testId'], $_POST['status']);
+            echo $newStatus;
     }
 }

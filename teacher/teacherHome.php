@@ -21,6 +21,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
+    <script src="../js/teacherHome.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -46,7 +47,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     <th>Id</th>
                     <th>Code</th>
                     <th>Created at</th>
-                    <th>Active</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -60,8 +61,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     <td><?=$test['id']?></td>
                     <td><?=$test['code']?></td>
                     <td><?=$test['created_at']?></td>
-                    <td><i class="fas fa-2x <?=($test['active'] ? 'text-success fa-check' : 'text-danger fa-times')?>-circle"></i></td>
-                    <td><a class="btn btn-dark <?=($test['active'] ? 'deactivate-test' : 'activate-test')?>"><?=($test['active'] ? 'Deactivate' : 'Activate')?></a></td>
+                    <td>
+                        <i class="fas fa-2x <?=($test['active'] ? 'text-success fa-check' : 'text-danger fa-times')?>-circle"></i>
+                    </td>
+                    <td>
+                        <button class="btn btn-dark <?=($test['active'] ? 'deactivate-test" data-status="0' : 'activate-test" data-status="1')?>" data-test-id="<?=$test['id']?>">
+                            <?=($test['active'] ? 'Deactivate' : 'Activate')?>
+                        </button>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

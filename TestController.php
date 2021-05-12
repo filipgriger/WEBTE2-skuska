@@ -215,4 +215,12 @@ class TestController
         }
     }
 
+    public function updateTestStatus($testId, $newStatus){
+        $newStatus = intval($newStatus);
+        $stmt = $this->getConnection()->prepare('update tests set active = ? where tests.id = ?');
+        $stmt->bind_param('ii',$newStatus, $testId);
+        $stmt->execute();
+        $stmt->close();
+        return $newStatus;
+    }
 }
