@@ -111,6 +111,18 @@ class SubmissionController
                         join options option_a on option_a.id = ans.option_id
                         WHERE
                             questions.id = ? AND answers.id = ?;';
+                break;
+            case 'image':
+                $q = 'SELECT
+                            ans.answer AS user_answer,
+                            questions.max_points
+                        FROM
+                            questions
+                        JOIN answers ON answers.question_id = questions.id
+                        JOIN answers_image ans ON ans.answer_id = answers.id
+                        WHERE
+                            questions.id = ? AND answers.id = ?;';
+                break;
         }
 
         $stmt = $this->getConnection()->prepare($q);
@@ -121,26 +133,29 @@ class SubmissionController
         while($a = $res->fetch_assoc()){
             array_push($answers, $a);
         }
-        $pointFraction = $answers[0]['max_points']/count($answers);
-        foreach ($answers as $toCompare){
-            if ($answer['type'] == 'simple'){
-                if (strcasecmp($toCompare['correct_answer'], $toCompare['user_answer']) == 0){
-                    $points += $pointFraction;
-                }
-            } else {
-                if ($toCompare['correct_answer'] == $toCompare['user_answer']){
-                    $points += $pointFraction;
-                    if ($answer['type'] == 'pair'){
-                        $this->updatePairFractionalPoints($toCompare['answer_pair_id'], $pointFraction);
+        if($answers) {
+            $pointFraction = $answers[0]['max_points'] / count($answers);
+            foreach ($answers as $toCompare) {
+                if ($answer['type'] == 'simple') {
+                    if (strcasecmp($toCompare['correct_answer'], $toCompare['user_answer']) == 0) {
+                        $points += $pointFraction;
                     }
                 } else {
-                    if ($answer['type'] == 'pair'){
-                        $this->updatePairFractionalPoints($toCompare['answer_pair_id'], 0.0);
+                    if ($toCompare['correct_answer'] == $toCompare['user_answer']) {
+                        $points += $pointFraction;
+                        if ($answer['type'] == 'pair') {
+                            $this->updatePairFractionalPoints($toCompare['answer_pair_id'], $pointFraction);
+                        }
+                    } else {
+                        if ($answer['type'] == 'pair') {
+                            $this->updatePairFractionalPoints($toCompare['answer_pair_id'], 0.0);
+                        }
                     }
                 }
             }
+
+            $this->updatePoints($answer['answer_id'], $points);
         }
-        $this->updatePoints($answer['answer_id'], $points);
 
         return $points;
     }
@@ -222,8 +237,20 @@ class SubmissionController
                     WHERE
                         submissions.id = ?
                         GROUP BY questions.id';
+        $qImage = 'SELECT
+                        questions.question,
+                        ans.answer AS user_answer,
+                        CONCAT(answers.points, "/", questions.max_points) AS points
+                    FROM
+                        submissions
+                    JOIN tests ON tests.id = submissions.test_id
+                    JOIN questions ON questions.test_id = tests.id
+                    JOIN answers ON answers.submission_id = submissions.id AND answers.question_id = questions.id
+                    JOIN answers_image ans ON ans.answer_id = answers.id
+                    WHERE
+                        submissions.id = ?';
 
-        $questionResults = ['total' => '', 'simple' => array(), 'option' => array(), 'pair' => array()];
+        $questionResults = ['total' => '', 'simple' => array(), 'option' => array(), 'pair' => array(), 'image' => array()];
 
         $stmt = $this->getConnection()->prepare('select concat(submissions.total_points,"/",tests.total_points) as total_points from submissions join tests on tests.id = submissions.test_id where submissions.id = ?');
         $stmt->bind_param('i', $submissionId);
@@ -256,6 +283,15 @@ class SubmissionController
         $res = $stmt->get_result();
         while ($a = $res->fetch_assoc()){
             array_push($questionResults['pair'], $a);
+        }
+        $stmt->close();
+
+        $stmt = $this->getConnection()->prepare($qImage);
+        $stmt->bind_param('i', $submissionId);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($a = $res->fetch_assoc()){
+            array_push($questionResults['image'], $a);
         }
         $stmt->close();
 

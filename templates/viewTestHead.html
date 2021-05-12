@@ -12,6 +12,61 @@
             crossorigin="anonymous"></script>
     <!--    <script src="createTest.js"></script>-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+            crossorigin="anonymous"></script>
+    <script src="../js/questionImage.js"></script>
+    <style>
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        html {
+            box-sizing: border-box;
+            background: whitesmoke;
+            font-family: sans-serif;
+        }
+
+        canvas {
+            background: white;
+            border: 1px solid #000;
+            cursor: crosshair;
+        }
+
+        #paint-app {
+            margin: auto;
+            width: 600px;
+        }
+
+        .picturepanel {
+            text-align: center;
+        }
+
+        .toolbar {
+            text-align: center;
+            margin: 8px;
+            display: flex;
+        }
+
+        .toolbar > span {
+            margin: 6px;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .toolbar a {
+            text-decoration: underline;
+        }
+
+        select {
+            text-align-last: center;
+            text-align: center;
+            -ms-text-align-last: center;
+            -moz-text-align-last: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container py-5">

@@ -5,6 +5,7 @@ $(function () {
     var optionCount = 0;
     var pairCount = 0;
     var optionOptionCount = 0;
+    var imageCount = 0;
 
 
 
@@ -19,6 +20,10 @@ $(function () {
     $('#add-pair').click((e) => {
         e.preventDefault();
         addPairQuestion();
+    });
+    $('#add-image').click((e) => {
+        e.preventDefault();
+        addImageQuestion();
     });
 
     function addSimpleQuestion(){
@@ -122,5 +127,23 @@ $(function () {
             $(this).parent().before($(pair));
         });
 
+    }
+
+    function addImageQuestion(){
+        imageCount ++;
+        let question = '' +
+            '<div class="form-group row">' +
+            '<input type="hidden" name="questions[' + (imageCount + optionCount + pairCount) + '][type]" value="image">' +
+            '<div class="col-10">' +
+            '<label class="font-weight-bold" for="q-image' + imageCount + '">Question ' + (imageCount + optionCount + pairCount) + '</label>' +
+            '<input type="text" id="q-image' + imageCount + '" class="form-control" name="questions[' + (imageCount + optionCount + pairCount) + '][question]">' +
+            '</div>' +
+            '<div class="col-2">' +
+            '<label for="points-image' + imageCount + '">Max points</label>' +
+            '<input id="points-image' + imageCount + '" type="number" min="1" class="form-control" name="questions[' + (imageCount + optionCount + pairCount) + '][points]">' +
+            '</div>' +
+            '</div>' +
+            '<hr class="border">';
+        controls.before($(question));
     }
 });

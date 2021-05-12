@@ -22,6 +22,13 @@ $results = $controller->getSubmissionResults($submissionId);
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/showResults.css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -100,6 +107,49 @@ $results = $controller->getSubmissionResults($submissionId);
                 </tr>
             <?php endforeach; ?>
         </table>
+        <hr class="border">
+    <?php endforeach; ?>
+
+    <?php foreach ($results['image'] as $imageQuestion):?>
+    <!-- TODO: či už učiteľ otázku vyhodnotil, alebo ešte nie, podľa toho zobraziť buď body alebo tento text -->
+
+        <table class="table border text-center">
+            <tr class="text-left">
+                <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?=$imageQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+            </tr>
+            <tr >
+                <th>Your answer</th>
+                <th>Points</th>
+            </tr>
+            <tr>
+                <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal(<?=$imageQuestion['user_answer']?>)">Image</button></td>
+                <td class="w-33"><?=$imageQuestion['points']?></td>
+            </tr>
+        </table>
+
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Obrázok</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function toggleModal(url) {
+                $("#modal").modal('show');
+                //$("#modalLabel").html("Obrázok");
+                $(".modal-body").html("<img src='images/" + url + ".png' alt='Obrázok'>");
+            }
+        </script>
         <hr class="border">
     <?php endforeach; ?>
 
