@@ -7,7 +7,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
 
 include_once '../TestController.php';
 $controller = new TestController();
-$test = $controller->getTest($_SESSION['testCode']);
+$test = $controller->getTestByCode($_SESSION['testCode']);
 $questions = $controller->getTestQuestions($test['id']);
 
 include '../templates/viewTestHead.html';

@@ -33,11 +33,10 @@ class SubmissionController
 
     public function evaluateSubmission($submissionId){
         $answers = $this->getSubmissionQuestions($submissionId);
-        $totalPoints = 0;
         foreach ($answers as $answer){
-            $totalPoints += $this->evaluateAnswer($answer);
+            $this->evaluateAnswer($answer);
         }
-        $this->updateSubmissionPoints($submissionId, $totalPoints);
+        $this->updateSubmissionPoints($submissionId);
     }
 
     public function getSubmissionQuestions($submissionId){
@@ -159,9 +158,9 @@ class SubmissionController
         $stmt->close();
     }
 
-    public function updateSubmissionPoints($submissionId, $totalPoints){
-        $stmt = $this->getConnection()->prepare('update submissions set total_points = ? where id = ?');
-        $stmt->bind_param('di', $totalPoints, $submissionId);
+    public function updateSubmissionPoints($submissionId){
+        $stmt = $this->getConnection()->prepare('update submissions set total_points = (select sum(points) from answers where submission_id = ? ) WHERE submissions.id = ?;');
+        $stmt->bind_param('ii', $submissionId, $submissionId);
         $stmt->execute();
         $stmt->close();
     }
@@ -172,7 +171,9 @@ class SubmissionController
                         questions.question,
                         qs.answer AS correct_answer,
                         ans.answer AS user_answer,
-                        CONCAT(answers.points, "/", questions.max_points) AS points
+                        answers.points,
+                        questions.max_points,
+                        answers.id as answer_id
                     FROM
                         submissions
                     JOIN tests ON tests.id = submissions.test_id
@@ -186,7 +187,9 @@ class SubmissionController
                         questions.question,
                         option_q.value AS correct_answer,
                         option_a.value AS user_answer,
-                        CONCAT(answers.points, "/", questions.max_points) AS points
+                        answers.points,
+                        questions.max_points,
+                        answers.id as answer_id
                     FROM
                         submissions
                     JOIN tests ON tests.id = submissions.test_id
@@ -205,8 +208,11 @@ class SubmissionController
                             CONCAT(\'{\', 
                                    \'"left":"\', qs.answer,
                                    \'", "user_answer":"\', option_a.value, 
-                                   \'", "correct_answer":"\', option_q.value, 
-                                   \'", "points":"\', concat(ans.partial_points, "/", round(questions.max_points/pairs,2)), 
+                                   \'", "correct_answer":"\', option_q.value,
+                                   \'", "answer_id":"\', answers.id,
+                                   \'", "answer_pair_id":"\', ans.id,  
+                                   \'", "points":"\', ans.partial_points,
+                                   \'", "max_points":"\', round(questions.max_points/pairs,2),
                                    \'"}\')),
                            \']\') as pairs
                     FROM
@@ -262,17 +268,9 @@ class SubmissionController
         return $questionResults;
     }
 
-    public function submissionExists($testId, $studentId){
-        $stmt = $this->getConnection()->prepare('select submissions.id from submissions where test_id = ? and student_id = ?');
-        $stmt->bind_param('ii', $testId, $studentId);
-        $stmt->execute();
-        $submissionId = $stmt->get_result()->fetch_assoc();
-        return $submissionId;
-    }
-
     public function getTestSubmissions($testId){
         $q = 'SELECT
-                student_code, `name`, surname,
+                submissions.id as submission_id, student_code, `name`, surname,
                 submissions.created_at AS submitted_at,
                 CONCAT(submissions.total_points, "/", tests.total_points) AS points,
                 ifnull(t1.require_action,0) as not_evaluated
@@ -294,6 +292,51 @@ class SubmissionController
         }
         $stmt->close();
         return $submissions;
+    }
+
+    public function getSubmissionByTestAndUser($testId, $studentId){
+        $stmt = $this->getConnection()->prepare('select * from submissions where test_id = ? and student_id = ?');
+        $stmt->bind_param('ii', $testId, $studentId);
+        $stmt->execute();
+        $submission = $stmt->get_result()->fetch_assoc();
+        return $submission;
+    }
+
+    public function getSubmission($submissionId){
+        $stmt = $this->getConnection()->prepare('select * from submissions where id = ?');
+        $stmt->bind_param('i', $submissionId);
+        $stmt->execute();
+        $submission = $stmt->get_result()->fetch_assoc();
+        return $submission;
+    }
+
+    public function editSubmission($submissionId, $modifications){
+        foreach ($modifications['notPair'] as $answerId => $points) {
+            $this->editAnswerPoints($answerId, $points);
+        }
+        foreach ($modifications['pair'] as $answerId => $pairs) {
+            $totalPoints = 0;
+            foreach ($pairs as $pairAnswerId => $partialPoints) {
+                $this->editPairAnswerPoints($pairAnswerId, $partialPoints);
+                $totalPoints += $partialPoints;
+            }
+            $this->editAnswerPoints($answerId, $totalPoints);
+        }
+        $this->updateSubmissionPoints($submissionId);
+    }
+
+    public function editAnswerPoints($answerId, $points){
+        $stmt = $this->getConnection()->prepare('update answers set points = ? where id = ?');
+        $stmt->bind_param('di', $points, $answerId);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function editPairAnswerPoints($answerId, $points){
+        $stmt = $this->getConnection()->prepare('update answers_pair set partial_points = ? where id = ?');
+        $stmt->bind_param('di', $points, $answerId);
+        $stmt->execute();
+        $stmt->close();
     }
 
 }

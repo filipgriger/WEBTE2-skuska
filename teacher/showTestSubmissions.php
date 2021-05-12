@@ -14,7 +14,7 @@ include '../TestController.php';
 $submissionController = new SubmissionController();
 $testController = new TestController();
 
-if (!($test = $testController->testExists($_GET['testId']))){
+if (!($test = $testController->getTest($_GET['testId']))){
     header('Location teacherHome.php');
     exit();
 }
@@ -34,7 +34,7 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
-    <script src="../js/teacherTestSubmissions.js"></script>
+    <script src="../js/showTestSubmissions.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
@@ -68,8 +68,8 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
             <td><?=$submission['name']?></td>
             <td><?=$submission['surname']?></td>
             <td><?=$submission['points']?>b</td>
-            <td><?=$submission['not_evaluated']?></td>
-            <td><button class="btn btn-dark">Edit evaluation</button></td>
+            <?='<td'.($submission['not_evaluated'] ? ' class="text-danger">'.$submission['not_evaluated'] : '>'.$submission['not_evaluated']).'</td>'?>
+            <td><a href="editSubmission.php?submissionId=<?=$submission['submission_id']?>" class="btn btn-dark">Edit evaluation</a></td>
         </tr>
         <?php endforeach;?>
         </tbody>

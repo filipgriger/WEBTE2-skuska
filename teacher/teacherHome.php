@@ -68,7 +68,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                         <button class="btn btn-<?=($test['active'] ? 'danger deactivate-test" data-status="0' : 'success activate-test" data-status="1')?>" data-test-id="<?=$test['id']?>">
                             <?=($test['active'] ? 'Deactivate' : 'Activate')?>
                         </button>
-                        <a class="btn btn-dark" href="teacherTestSubmissions.php?testId=<?=$test['id']?>">View submissions</a>
+                        <a class="btn btn-dark" href="showTestSubmissions.php?testId=<?=$test['id']?>">View submissions</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
