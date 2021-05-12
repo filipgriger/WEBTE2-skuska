@@ -75,13 +75,13 @@ if(isset($_POST['studentForm'])){
                     $_SESSION["studentId"] = $studentId;
 
 //                    submission doesnt exist yet and test is active
-                    if (!($submissionId = (new SubmissionController())->submissionExists($testId, $studentId)) && $test["active"]) {
+                    if (!($submission = (new SubmissionController())->getSubmissionByTestAndUser($testId, $studentId)) && $test["active"]) {
                         // Redirect user to test page
                         header("Location: test/viewTest.php");
                         exit();
                     } // test was submitted already
-                    elseif ($submissionId) {
-                        $_SESSION["submissionId"] = $submissionId;
+                    elseif ($submission) {
+                        $_SESSION["submissionId"] = $submission['id'];
 //                        redirect to show results page
                         header("Location: test/showTestResults.php");
                         exit();

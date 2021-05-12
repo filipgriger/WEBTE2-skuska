@@ -11,7 +11,6 @@ if ($_SESSION['role'] == 'student'){
     $teacherId = $_SESSION['teacherId'];
 }
 
-
 if (isset($_POST)){
     switch ($_POST['route']){
         case 'createTest':
@@ -34,5 +33,11 @@ if (isset($_POST)){
             $testController = new TestController();
             $newStatus = $testController->updateTestStatus($_POST['testId'], $_POST['status']);
             echo $newStatus;
+            break;
+        case 'editSubmission':
+            $submissionController = new SubmissionController();
+            $submissionController->editSubmission($_POST['submissionId'], $_POST['modifications']);
+            header('Location: teacher/showTestSubmissions.php?testId='.$_POST['testId']);
+            break;
     }
 }

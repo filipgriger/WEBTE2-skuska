@@ -48,7 +48,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     <th>Code</th>
                     <th>Created at</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th colspan="2">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,9 +65,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                         <i class="fas fa-2x <?=($test['active'] ? 'text-success fa-check' : 'text-danger fa-times')?>-circle"></i>
                     </td>
                     <td>
-                        <button class="btn btn-dark <?=($test['active'] ? 'deactivate-test" data-status="0' : 'activate-test" data-status="1')?>" data-test-id="<?=$test['id']?>">
+                        <button class="btn btn-<?=($test['active'] ? 'danger deactivate-test" data-status="0' : 'success activate-test" data-status="1')?>" data-test-id="<?=$test['id']?>">
                             <?=($test['active'] ? 'Deactivate' : 'Activate')?>
                         </button>
+                        <a class="btn btn-dark" href="showTestSubmissions.php?testId=<?=$test['id']?>">View submissions</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

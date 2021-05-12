@@ -37,4 +37,13 @@ class StudentController
         }
         return $res['id'];
     }
+
+    public function getStudent($studentId){
+        $stmt = $this->getConnection()->prepare('select * from students where id = ?');
+        $stmt->bind_param('i', $studentId);
+        $stmt->execute();
+        $student = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $student;
+    }
 }
