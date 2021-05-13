@@ -75,6 +75,12 @@ class TestController
                 }
                 if(isset($stmt)) $stmt->close();
                 break;
+            case 'image':
+                $stmt = $this->getConnection()->prepare('insert into questions_image (question_id) value (?)');
+                $stmt->bind_param('i', $questionId);
+                $stmt->execute();
+                $stmt->close();
+                break;
         }
     }
 
@@ -127,6 +133,14 @@ class TestController
                     array_push($options, $a);
                 }
                 return ['answers' => $answers, 'options' => $options];
+            case 'image':
+                $stmt = $this->getConnection()->prepare('SELECT questions.* FROM questions join questions_image on questions_image.question_id = questions.id WHERE questions.id = ?;');
+                $stmt->bind_param('i',$questionId);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $stmt->close();
+                return $res->fetch_assoc();
+                break;
             default:
                 return null;
         }
@@ -179,10 +193,13 @@ class TestController
         $stmt->close();
     }
 
-    public function saveAnswers($submissionId, $answers){
+    public function saveAnswers($studentId, $submissionId, $answers){
         foreach (array_keys($answers) as $type){
             foreach ($answers[$type] as $questionId => $answer){
                 $answerId = $this->createAnswer($submissionId, $questionId);
+                if ($type == 'image'){
+                    $answer = '/images/submissions/students/'.$studentId.'/question-'.$answer.'.png';
+                }
                 $this->createAnswerVariation($answerId, $type, $answer);
             }
         }
@@ -221,6 +238,12 @@ class TestController
                 }
                 $stmt->close();
                 break;
+            case 'image':
+                $stmt = $this->getConnection()->prepare('insert into answers_image (answer_id, answer, image_url) value (?, ?, ?)');
+                $stmt->bind_param('iss', $answerId, $answer, $answer);
+                $stmt->execute();
+                $stmt->close();
+                break;
         }
     }
 
@@ -233,4 +256,8 @@ class TestController
         return $newStatus;
     }
 
+    public function getMaxQuestionId(){
+        $res = $this->getConnection()->query('select max(id) from questions');
+        return $res->fetch_row()[0] ?? 0;
+    }
 }

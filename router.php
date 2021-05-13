@@ -22,7 +22,7 @@ if (isset($_POST)){
             $submissionController = new SubmissionController();
 
             $submissionId = $submissionController->createSubmission($_POST['test-id'], $studentId);
-            $testController->saveAnswers($submissionId, $_POST['answers']);
+            $testController->saveAnswers($studentId, $submissionId, $_POST['answers']);
 
             $submissionController->evaluateSubmission($submissionId);
 

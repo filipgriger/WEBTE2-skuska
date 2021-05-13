@@ -67,6 +67,41 @@ include '../templates/viewTestHead.html';
                 </div>
                 <hr class="border">
             <?php break;
+            case 'image':
+                $images = $controller->getQuestion($question['id'], $question['type']);
+                ?>
+                <div class="form-group">
+                    <div class="mb-3 font-weight-bold"><?=$question['question']?><span class="pl-2">[<?=$question['max_points']?>b]</div>
+<!--                    <label class="font-weight-bold" for="question--><?//=$question['id']?><!--">--><?//=$question['question']?><!--<span class="pl-2">[--><?//=$question['max_points']?><!--b]</span></label>-->
+<!--                    <input type="text" class="form-control" id="question--><?//=$question['id']?><!--" name="answers[simple][--><?//=$question['id']?><!--]" placeholder="Answer">-->
+                    <button type="button" class="btn btn-dark px-5" data-toggle="modal" data-target="#question<?=$question['id']?>" data-backdrop="static" data-keyboard="false">
+                        Draw
+                    </button>
+
+                    <div class="modal fade" id="question<?=$question['id']?>" tabindex="-1" aria-labelledby="questionLabel<?=$question['id']?>" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="questionLabel<?=$question['id']?>"><?=$question['question']?></h5>
+                                    <!--<button type="button" id="close<?=$question['id']?>" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>-->
+                                </div>
+                                <div class="modal-body">
+                                    <div id="paint-app<?=$question['id']?>"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="delete<?=$question['id']?>" class="btn btn-danger mr-auto">Vymazať obrázok</button>
+                                    <button type="button" id="save<?=$question['id']?>" class="btn btn-danger" data-dismiss="modal">Uložiť</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="question<?=$question['id']?>" name="answers[image][<?=$question['id']?>]" value="<?=$question['id']?>">
+                <hr class="border">
+            <?php break;
         }
     } ?>
 
