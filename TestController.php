@@ -255,9 +255,4 @@ class TestController
         $stmt->close();
         return $newStatus;
     }
-
-    public function getMaxQuestionId(){
-        $res = $this->getConnection()->query('select max(id) from questions');
-        return $res->fetch_row()[0] ?? 0;
-    }
 }
