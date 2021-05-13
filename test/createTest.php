@@ -30,6 +30,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <label for="test-code">Test code</label>
             <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx">
         </div>
+        <div class="form-group">
+            <label for="test-code">Time limit (in minutes)</label>
+            <input type="number" class="form-control" id="test-time" name="test-time" placeholder="00:00">
+        </div>
         <hr class="border">
         <input type="hidden" name="route" value="createTest">
         <div id="controls" class="text-center">

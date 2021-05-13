@@ -21,11 +21,11 @@ class TestController
         return $this->connection;
     }
 
-    public function createTest($teacherId, $code, $questions){
+    public function createTest($teacherId, $code,$time, $questions){
         if (count($questions) > 0) {
 
-            $stmt = $this->getConnection()->prepare('insert into tests (code, teacher_id, total_points) value (?, ?, 0)');
-            $stmt->bind_param('si', $code, $teacherId);
+            $stmt = $this->getConnection()->prepare('insert into tests (code, teacher_id,time, total_points) value (?, ?, ?, 0)');
+            $stmt->bind_param('sii', $code, $teacherId,$time);
             $stmt->execute();
             $stmt->close();
             $testId = $this->getConnection()->insert_id;
@@ -153,6 +153,55 @@ class TestController
         $test = $stmt->get_result()->fetch_assoc();
         $stmt->close();
         return $test;
+    }
+
+    public function getAnswerByStudentAndSub($code1,$code2,$type){
+        $sql = "SELECT id from answers where submission_id = $code1 && question_id = $code2";
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute();
+        $test = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        $code=$test['id'];
+
+        switch ($type){
+            case 'simple':
+                $stmt = $this->getConnection()->prepare('select answer from answers_simple where answer_id = ?');
+                $stmt->bind_param('i',$code);
+                $stmt->execute();
+                $answer = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                $answer = $answer['answer'];
+                return $answer;
+                break;
+            case 'option':
+                $stmt = $this->getConnection()->prepare('select option_id from answers_option where answer_id = ?');
+                $stmt->bind_param('i',$code);
+                $stmt->execute();
+                $answer = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                $answer = $answer['option_id'];
+                return $answer;
+                break;
+            case 'pair':
+                $stmt = $this->getConnection()->prepare('select option_id from answers_pair where answer_id = ?');
+                $stmt->bind_param('i',$code);
+                $stmt->execute();
+                $answer = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                $answer = $answer['option_id'];
+                return $answer;
+            case 'image':
+                $stmt = $this->getConnection()->prepare('select answer from answers_image where answer_id = ?');
+                $stmt->bind_param('i',$code);
+                $stmt->execute();
+                $answer = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                $answer = $answer['answer'];
+                return $answer;
+                break;
+            default:
+                return null;
+        }
     }
 
     public function getTest($testId){
