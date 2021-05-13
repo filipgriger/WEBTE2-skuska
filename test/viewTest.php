@@ -78,7 +78,7 @@ include '../templates/viewTestHead.html';
                         Draw
                     </button>
 
-                    <div class="modal fade" id="question<?=$question['id']?>" tabindex="-1" aria-labelledby="questionLabel<?=$question['id']?>" aria-hidden="true">
+                    <div class="modal fade image-question" id="question<?=$question['id']?>" tabindex="-1" aria-labelledby="questionLabel<?=$question['id']?>" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">

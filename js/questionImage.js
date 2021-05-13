@@ -4,7 +4,7 @@ $(document).ready(function () {
         method: 'POST',
         success: function (data) {
             for (let i = 1; i <= parseInt(data); i++) {
-                if ($("#question" + i).length > 0) {
+                if ($("#question" + i).length > 0 && $("#question" + i).hasClass("image-question")) {
                     function createPaint(parent) {
                         var canvas = elt('canvas', {
                             width: 600,
