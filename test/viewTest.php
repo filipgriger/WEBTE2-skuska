@@ -11,6 +11,8 @@ $test = $controller->getTestByCode($_SESSION['testCode']);
 $questions = $controller->getTestQuestions($test['id']);
 
 include '../templates/viewTestHead.html';
+
+$controller->createStudentStatus($_SESSION['studentId'], $_SESSION['testCode']);
 ?>
 
 <h1>Test <?=$test['code']?></h1>

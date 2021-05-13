@@ -39,10 +39,26 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8"
             src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        window.onload = function () {
+            var testId = "<?php echo $_GET['testId']; ?>"
 
+            var source = new EventSource("../test/notification.php?testId=" + testId);
+            source.addEventListener('evt', (e) => {
+                //console.log(JSON.parse(e.data));
+                if(e.data) {
+                    $(".missing-students").html("Študenti, ktorí majú otvorený iný tab (ids): " + JSON.parse(e.data));
+                } else {
+                    $(".missing-students").html("");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div class="container py-5">
+
+    <div class="missing-students"></div>
 
     <div class="d-flex justify-content-between">
         <div class="h1">Test <<span class="font-italic"><?= $test['code'] ?></span>> submissions</div>

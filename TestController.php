@@ -255,4 +255,36 @@ class TestController
         $stmt->close();
         return $newStatus;
     }
+
+    public function createStudentStatus($studentId, $testCode) {
+        $stmt = $this->getConnection()->prepare('insert ignore into students_status (student_id, test_id, status) value (?, ?, 1)');
+        $testId = $this->getTestByCode($testCode);
+        $stmt->bind_param('ii', $studentId, $testId["id"]);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function changeStudentStatus($studentId, $testCode, $status) {
+        $stmt = $this->getConnection()->prepare('update students_status set status = (?) where student_id = ? and test_id = ?');
+        $testId = $this->getTestByCode($testCode);
+        $stmt->bind_param('iii',$status, $studentId, $testId["id"]);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function studentStatusChanged($testId) {
+        $stmt = $this->getConnection()->prepare('select * from students_status where test_id = ? and status = 0');
+        $stmt->bind_param('i', $testId);
+        $stmt->execute();
+
+        $res = $stmt->get_result();
+
+        $students = array();
+        while ($a = $res->fetch_assoc()){
+            array_push($students, $a["student_id"]);
+        }
+        $stmt->close();
+
+        return $students ?? null;
+    }
 }

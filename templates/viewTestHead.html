@@ -16,6 +16,33 @@
             integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
             crossorigin="anonymous"></script>
     <script src="../js/questionImage.js"></script>
+    <script>
+        window.onload = function () {
+            var studentId = "<?php echo $_SESSION['studentId']; ?>";
+            var testCode = "<?php echo $_SESSION['testCode']; ?>"
+
+                document.addEventListener("visibilitychange", () => {
+                    if (document.hidden) {
+                        update(0);
+                    } else {
+                        update(1);
+                    }
+                });
+
+            function update(status) {
+                $.ajax({
+                    url: '../test/status.php',
+                    method: 'POST',
+                    data: {
+                        studentId: studentId, testCode: testCode, status: status
+                    },
+                    /*success: function (data) {
+                        console.log(data);
+                    }*/
+                });
+            }
+        };
+    </script>
     <style>
         *,
         *:before,
