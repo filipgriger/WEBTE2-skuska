@@ -2,7 +2,7 @@
 
 ## Instalacia
 
-- vytvor si databazu z webte_skuska_dump.sql
+- vytvor si databazu z najnovsieho dumpu v /sql/
 
 - vytvor a nastav config.php
  
@@ -20,6 +20,8 @@
     * simple
     * option
     * pairs1
+    * image1
+    * tstAll
 
 ## Ulohy
 
@@ -31,3 +33,4 @@
 
 - hodnotenie testu (Filip)
 
+- otazka s kreslenim (Adam)
