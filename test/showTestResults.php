@@ -29,6 +29,8 @@ $results = $controller->getSubmissionResults($submissionId);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
             crossorigin="anonymous"></script>
+
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
@@ -150,6 +152,26 @@ $results = $controller->getSubmissionResults($submissionId);
                 $(".modal-body").html("<img src='../" + url + "' alt='Obrázok'>");
             }
         </script>
+        <hr class="border">
+    <?php endforeach; ?>
+
+    <?php foreach ($results['expression'] as $expressionQuestion):?>
+    <!-- TODO: či už učiteľ otázku vyhodnotil, alebo ešte nie, podľa toho zobraziť buď body alebo tento text -->
+        
+        <table class="table border text-center">
+            <tr class="text-left">
+                <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?=$expressionQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+            </tr>
+            <tr >
+                <th>Your answer</th>
+                <th>Points</th>
+            </tr>
+            <tr>
+                <td class="w-33"><?=$expressionQuestion['expression']; ?></td>
+                <td class="w-33"><?=$expressionQuestion['points'] ?: '-'?> / <?=$expressionQuestion['max_points']?></td>
+            </tr>
+        </table>
+
         <hr class="border">
     <?php endforeach; ?>
 

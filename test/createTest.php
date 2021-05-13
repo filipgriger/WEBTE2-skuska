@@ -37,6 +37,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <button id="add-option" class="btn btn-dark px-5 mx-3">Choose option</button>
             <button id="add-pair" class="btn btn-dark px-5 mx-3">Pair options</button>
             <button id="add-image" class="btn btn-dark px-5 mx-3">Image</button>
+            <br>
+            <br>
+            <button id="add-expression" class="btn btn-dark px-5 mx-3">Mathematical expression</button>
         </div>
         <input type="submit" class="btn btn-block btn-primary mt-3" value="Submit">
     </form>
