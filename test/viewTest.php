@@ -71,9 +71,10 @@ include '../templates/viewTestHead.html';
                 $images = $controller->getQuestion($question['id'], $question['type']);
                 ?>
                 <div class="form-group">
-                    <!--<label class="font-weight-bold" for="question<?=$question['id']?>"><?=$question['question']?><span class="pl-2">[<?=$question['max_points']?>b]</span></label>
-                    <input type="text" class="form-control" id="question<?=$question['id']?>" name="answers[simple][<?=$question['id']?>]" placeholder="Answer">-->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#question<?=$question['id']?>" data-backdrop="static" data-keyboard="false">
+                    <div class="mb-3 font-weight-bold"><?=$question['question']?><span class="pl-2">[<?=$question['max_points']?>b]</div>
+<!--                    <label class="font-weight-bold" for="question--><?//=$question['id']?><!--">--><?//=$question['question']?><!--<span class="pl-2">[--><?//=$question['max_points']?><!--b]</span></label>-->
+<!--                    <input type="text" class="form-control" id="question--><?//=$question['id']?><!--" name="answers[simple][--><?//=$question['id']?><!--]" placeholder="Answer">-->
+                    <button type="button" class="btn btn-dark px-5" data-toggle="modal" data-target="#question<?=$question['id']?>" data-backdrop="static" data-keyboard="false">
                         Draw
                     </button>
 
@@ -81,7 +82,7 @@ include '../templates/viewTestHead.html';
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="questionLabel<?=$question['id']?>">Kresli<?=$question['id']?></h5>
+                                    <h5 class="modal-title" id="questionLabel<?=$question['id']?>"><?=$question['question']?></h5>
                                     <!--<button type="button" id="close<?=$question['id']?>" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>-->

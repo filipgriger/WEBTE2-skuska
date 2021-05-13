@@ -122,7 +122,7 @@ $results = $controller->getSubmissionResults($submissionId);
                 <th>Points</th>
             </tr>
             <tr>
-                <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal(<?=$imageQuestion['user_answer']?>)">Image</button></td>
+                <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal('<?=$imageQuestion['image_url']?>')">Image</button></td>
                 <td class="w-33"><?=$imageQuestion['points']?></td>
             </tr>
         </table>
@@ -147,7 +147,7 @@ $results = $controller->getSubmissionResults($submissionId);
             function toggleModal(url) {
                 $("#modal").modal('show');
                 //$("#modalLabel").html("Obrázok");
-                $(".modal-body").html("<img src='images/" + url + ".png' alt='Obrázok'>");
+                $(".modal-body").html("<img src='../" + url + "' alt='Obrázok'>");
             }
         </script>
         <hr class="border">

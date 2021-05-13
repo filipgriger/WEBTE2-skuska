@@ -239,13 +239,13 @@ class SubmissionController
                         GROUP BY questions.id';
         $qImage = 'SELECT
                         questions.question,
-                        ans.answer AS user_answer,
+                        ans.image_url AS image_url,
                         CONCAT(answers.points, "/", questions.max_points) AS points
                     FROM
                         submissions
                     JOIN tests ON tests.id = submissions.test_id
                     JOIN questions ON questions.test_id = tests.id
-                    JOIN answers ON answers.submission_id = submissions.id AND answers.question_id = questions.id
+                    JOIN answers ON answers.question_id = questions.id and answers.submission_id = submissions.id
                     JOIN answers_image ans ON ans.answer_id = answers.id
                     WHERE
                         submissions.id = ?';

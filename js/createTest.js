@@ -30,18 +30,18 @@ $(function () {
         simpleCount ++;
         let question = '' +
             '<div class="form-group row">' +
-            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount) + '][type]" value="simple">' +
+            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="simple">' +
             '<div class="col-5">' +
-            '<label class="font-weight-bold" for="q-simple' + simpleCount + '">Question ' + (simpleCount + optionCount + pairCount) + '</label>' +
-            '<input type="text" id="q-simple' + simpleCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][question]">' +
+            '<label class="font-weight-bold" for="q-simple' + simpleCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount) + '</label>' +
+            '<input type="text" id="q-simple' + simpleCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][question]">' +
             '</div>' +
             '<div class="col-5">' +
             '<label for="a-simple' + simpleCount + '">Correct answer</label>' +
-            '<input id="a-simple' + simpleCount + '" type="text" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][answer]">' +
+            '<input id="a-simple' + simpleCount + '" type="text" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][answer]">' +
             '</div>' +
             '<div class="col-2">' +
             '<label for="points-simple' + simpleCount + '">Max points</label>' +
-            '<input id="points-simple' + simpleCount + '" type="number" min="1" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][points]">' +
+            '<input id="points-simple' + simpleCount + '" type="number" min="1" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][points]">' +
             '</div>' +
             '</div>' +
             '<hr class="border">';
@@ -51,19 +51,19 @@ $(function () {
     function addOptionQuestion(){
         optionCount++;
         let question = '' +
-            '<div class="form-group row" data-option-count="1" data-index="' + (simpleCount + optionCount + pairCount) + '">' +
-            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount) + '][type]" value="option">' +
+            '<div class="form-group row" data-option-count="1" data-index="' + (simpleCount + optionCount + pairCount + imageCount) + '">' +
+            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="option">' +
             '<div class="col-5">' +
-            '<label class="font-weight-bold" for="q-option' + optionCount + '">Question ' + (simpleCount + optionCount + pairCount) + '</label>' +
-            '<input type="text" id="q-option' + optionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][question]">' +
+            '<label class="font-weight-bold" for="q-option' + optionCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount) + '</label>' +
+            '<input type="text" id="q-option' + optionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][question]">' +
             '</div>' +
             '<div class="col-5">' +
             '<label for="a-option' + optionCount + '-' + ++optionOptionCount +'">Correct option</label>' +
-            '<input type="text" id="a-option' + optionCount + '-' + ++optionOptionCount +'" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][answer]">' +
+            '<input type="text" id="a-option' + optionCount + '-' + ++optionOptionCount +'" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][answer]">' +
             '</div>' +
             '<div class="col-2">' +
             '<label for="points-option' + optionCount + '-' + ++optionOptionCount +'">Max points</label>' +
-            '<input type="number" min="1" id="points-option' + optionCount + '-' + ++optionOptionCount +'" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][points]">' +
+            '<input type="number" min="1" id="points-option' + optionCount + '-' + ++optionOptionCount +'" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][points]">' +
             '</div>' +
             '<div class="col-12 my-2"><button class="btn btn-dark btn-block add-option-' + optionCount + '">Add option</button></div>' +
             '</div>' + '<hr class="border">';
@@ -90,15 +90,15 @@ $(function () {
     function addPairQuestion(){
         pairCount++;
         let question = '' +
-            '<div class="form-group row" data-pair-count="0" data-index="' + (simpleCount + optionCount + pairCount) + '">' +
-            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount) + '][type]" value="pair">' +
+            '<div class="form-group row" data-pair-count="0" data-index="' + (simpleCount + optionCount + pairCount + imageCount) + '">' +
+            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="pair">' +
             '<div class="col-10">' +
-            '<label class="font-weight-bold" for="q-pair' + pairCount + '">Question ' + (simpleCount + optionCount + pairCount) + '</label>' +
-            '<input type="text" id="q-pair' + pairCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][question]">' +
+            '<label class="font-weight-bold" for="q-pair' + pairCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount) + '</label>' +
+            '<input type="text" id="q-pair' + pairCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
             '<label for="points-option' + optionCount + '-' + ++optionOptionCount +'">Max points</label>' +
-            '<input type="number" min="1" id="points-option' + optionCount + '-' + ++optionOptionCount +'" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount) + '][points]">' +
+            '<input type="number" min="1" id="points-option' + optionCount + '-' + ++optionOptionCount +'" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][points]">' +
             '</div>' +
             '<div class="col-12 mt-3 mb-2"><button class="btn btn-dark btn-block add-pair-' + pairCount + '">Add pair</button></div>' +
             '</div>' + '<hr class="border">';
@@ -133,14 +133,14 @@ $(function () {
         imageCount ++;
         let question = '' +
             '<div class="form-group row">' +
-            '<input type="hidden" name="questions[' + (imageCount + optionCount + pairCount) + '][type]" value="image">' +
+            '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="image">' +
             '<div class="col-10">' +
-            '<label class="font-weight-bold" for="q-image' + imageCount + '">Question ' + (imageCount + optionCount + pairCount) + '</label>' +
-            '<input type="text" id="q-image' + imageCount + '" class="form-control" name="questions[' + (imageCount + optionCount + pairCount) + '][question]">' +
+            '<label class="font-weight-bold" for="q-image' + imageCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount) + '</label>' +
+            '<input type="text" id="q-image' + imageCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
             '<label for="points-image' + imageCount + '">Max points</label>' +
-            '<input id="points-image' + imageCount + '" type="number" min="1" class="form-control" name="questions[' + (imageCount + optionCount + pairCount) + '][points]">' +
+            '<input id="points-image' + imageCount + '" type="number" min="1" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][points]">' +
             '</div>' +
             '</div>' +
             '<hr class="border">';

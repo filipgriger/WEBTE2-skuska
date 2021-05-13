@@ -184,10 +184,13 @@ class TestController
         $stmt->close();
     }
 
-    public function saveAnswers($submissionId, $answers){
+    public function saveAnswers($studentId, $submissionId, $answers){
         foreach (array_keys($answers) as $type){
             foreach ($answers[$type] as $questionId => $answer){
                 $answerId = $this->createAnswer($submissionId, $questionId);
+                if ($type == 'image'){
+                    $answer = '/images/submissions/students/'.$studentId.'/question-'.$answer.'.png';
+                }
                 $this->createAnswerVariation($answerId, $type, $answer);
             }
         }
@@ -227,8 +230,8 @@ class TestController
                 $stmt->close();
                 break;
             case 'image':
-                $stmt = $this->getConnection()->prepare('insert into answers_image (answer_id, answer) value (?, ?)');
-                $stmt->bind_param('is', $answerId, $answer);
+                $stmt = $this->getConnection()->prepare('insert into answers_image (answer_id, answer, image_url) value (?, ?, ?)');
+                $stmt->bind_param('iss', $answerId, $answer, $answer);
                 $stmt->execute();
                 $stmt->close();
                 break;
