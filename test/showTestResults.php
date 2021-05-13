@@ -60,7 +60,7 @@ $results = $controller->getSubmissionResults($submissionId);
             <tr>
                 <td class="w-33"><?=$simpleQuestion['user_answer']?></td>
                 <td class="w-33"><?=$simpleQuestion['correct_answer']?></td>
-                <td class="w-33"><?=$simpleQuestion['points']?></td>
+                <td class="w-33"><?=$simpleQuestion['points']?> / <?=$simpleQuestion['max_points']?></td>
             </tr>
         </table>
         <hr class="border">
@@ -80,7 +80,7 @@ $results = $controller->getSubmissionResults($submissionId);
             <tr>
                 <td><?=$optionQuestion['user_answer']?></td>
                 <td><?=$optionQuestion['correct_answer']?></td>
-                <td><?=$optionQuestion['points']?></td>
+                <td><?=$optionQuestion['points']?> / <?=$optionQuestion['max_points']?></td>
             </tr>
         </table>
         <hr class="border">
@@ -103,7 +103,7 @@ $results = $controller->getSubmissionResults($submissionId);
                     <td><?=$pair['left']?></td>
                     <td><?=$pair['user_answer']?></td>
                     <td><?=$pair['correct_answer']?></td>
-                    <td><?=$pair['points']?></td>
+                    <td><?=$pair['points']?> / <?=$pair['max_points']?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -123,7 +123,7 @@ $results = $controller->getSubmissionResults($submissionId);
             </tr>
             <tr>
                 <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal('<?=$imageQuestion['image_url']?>')">Image</button></td>
-                <td class="w-33"><?=$imageQuestion['points']?></td>
+                <td class="w-33"><?=$imageQuestion['points'] ?: '-'?> / <?=$imageQuestion['max_points']?></td>
             </tr>
         </table>
 

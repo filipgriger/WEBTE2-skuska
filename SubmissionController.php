@@ -111,49 +111,51 @@ class SubmissionController
                         WHERE
                             questions.id = ? AND answers.id = ?;';
                 break;
-            case 'image':
-                $q = 'SELECT
-                            ans.answer AS user_answer,
-                            questions.max_points
-                        FROM
-                            questions
-                        JOIN answers ON answers.question_id = questions.id
-                        JOIN answers_image ans ON ans.answer_id = answers.id
-                        WHERE
-                            questions.id = ? AND answers.id = ?;';
-                break;
+//            case 'image':
+//                $q = 'SELECT
+//                            ans.image_url AS image_url,
+//                            questions.max_points
+//                        FROM
+//                            questions
+//                        JOIN answers ON answers.question_id = questions.id
+//                        JOIN answers_image ans ON ans.answer_id = answers.id
+//                        WHERE
+//                            questions.id = ? AND answers.id = ?;';
+//                break;
         }
 
-        $stmt = $this->getConnection()->prepare($q);
-        $stmt->bind_param('ii', $answer['question_id'], $answer['answer_id']);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        $answers = [];
-        while($a = $res->fetch_assoc()){
-            array_push($answers, $a);
-        }
-        if($answers) {
-            $pointFraction = $answers[0]['max_points'] / count($answers);
-            foreach ($answers as $toCompare) {
-                if ($answer['type'] == 'simple') {
-                    if (strcasecmp($toCompare['correct_answer'], $toCompare['user_answer']) == 0) {
-                        $points += $pointFraction;
-                    }
-                } else {
-                    if ($toCompare['correct_answer'] == $toCompare['user_answer']) {
-                        $points += $pointFraction;
-                        if ($answer['type'] == 'pair') {
-                            $this->updatePairFractionalPoints($toCompare['answer_pair_id'], $pointFraction);
+        if ($answer['type'] !== 'image') {
+            $stmt = $this->getConnection()->prepare($q);
+            $stmt->bind_param('ii', $answer['question_id'], $answer['answer_id']);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $answers = [];
+            while ($a = $res->fetch_assoc()) {
+                array_push($answers, $a);
+            }
+            if ($answers) {
+                $pointFraction = $answers[0]['max_points'] / count($answers);
+                foreach ($answers as $toCompare) {
+                    if ($answer['type'] == 'simple') {
+                        if (strcasecmp($toCompare['correct_answer'], $toCompare['user_answer']) == 0) {
+                            $points += $pointFraction;
                         }
                     } else {
-                        if ($answer['type'] == 'pair') {
-                            $this->updatePairFractionalPoints($toCompare['answer_pair_id'], 0.0);
+                        if ($toCompare['correct_answer'] == $toCompare['user_answer']) {
+                            $points += $pointFraction;
+                            if ($answer['type'] == 'pair') {
+                                $this->updatePairFractionalPoints($toCompare['answer_pair_id'], $pointFraction);
+                            }
+                        } else {
+                            if ($answer['type'] == 'pair') {
+                                $this->updatePairFractionalPoints($toCompare['answer_pair_id'], 0.0);
+                            }
                         }
                     }
                 }
-            }
 
-            $this->updatePoints($answer['answer_id'], $points);
+                $this->updatePoints($answer['answer_id'], $points);
+            }
         }
 
         return $points;
@@ -245,8 +247,10 @@ class SubmissionController
                         GROUP BY questions.id';
         $qImage = 'SELECT
                         questions.question,
+                        answers.id as answer_id,
                         ans.image_url AS image_url,
-                        CONCAT(answers.points, "/", questions.max_points) AS points
+                        answers.points,
+                        questions.max_points
                     FROM
                         submissions
                     JOIN tests ON tests.id = submissions.test_id
@@ -258,7 +262,7 @@ class SubmissionController
 
         $questionResults = ['total' => '', 'simple' => array(), 'option' => array(), 'pair' => array(), 'image' => array()];
 
-        $stmt = $this->getConnection()->prepare('select concat(submissions.total_points,"/",tests.total_points) as total_points from submissions join tests on tests.id = submissions.test_id where submissions.id = ?');
+        $stmt = $this->getConnection()->prepare('select concat(ifnull(submissions.total_points,"-")," / ",tests.total_points) as total_points from submissions join tests on tests.id = submissions.test_id where submissions.id = ?');
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
         $res = $stmt->get_result()->fetch_assoc();
@@ -308,7 +312,7 @@ class SubmissionController
         $q = 'SELECT
                 submissions.id as submission_id, student_code, `name`, surname,
                 submissions.created_at AS submitted_at,
-                CONCAT(submissions.total_points, "/", tests.total_points) AS points,
+                CONCAT(ifnull(submissions.total_points,"-"), " / ", tests.total_points) AS points,
                 ifnull(t1.require_action,0) as not_evaluated
             FROM
                 submissions

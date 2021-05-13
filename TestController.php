@@ -239,8 +239,8 @@ class TestController
                 $stmt->close();
                 break;
             case 'image':
-                $stmt = $this->getConnection()->prepare('insert into answers_image (answer_id, answer, image_url) value (?, ?, ?)');
-                $stmt->bind_param('iss', $answerId, $answer, $answer);
+                $stmt = $this->getConnection()->prepare('insert into answers_image (answer_id, image_url) value (?, ?)');
+                $stmt->bind_param('is', $answerId,$answer);
                 $stmt->execute();
                 $stmt->close();
                 break;
