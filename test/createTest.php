@@ -24,6 +24,7 @@ $controller = new TestController();
         crossorigin="anonymous"></script>
     <script src="../js/createTest.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
 <div class="container py-5">
@@ -38,7 +39,7 @@ $controller = new TestController();
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="test-code">Time limit (in minutes)</label>
+                    <label for="test-time">Time limit (in minutes)</label>
                     <input type="number" class="form-control" id="test-time" name="test-time" placeholder="00:00">
                 </div>
             </div>
@@ -47,12 +48,12 @@ $controller = new TestController();
         <hr class="border">
         <input type="hidden" name="route" value="createTest">
         <div id="controls" class="text-center">
-            <div class="w-100 font-weight-bold mb-2">Add question</div>
-            <button id="add-simple" class="btn btn-dark px-5 mx-1">Simple answer</button>
-            <button id="add-option" class="btn btn-dark px-5 mx-1">Choose option</button>
-            <button id="add-pair" class="btn btn-dark px-5 mx-1">Pair options</button>
-            <button id="add-image" class="btn btn-dark px-5 mx-1">Image</button>
-            <button id="add-expression" class="btn btn-dark px-5 mx-1">Mathematical expression</button>
+            <div class="w-100 font-weight-bold mb-1">Add question</div>
+            <button id="add-simple" class="btn btn-dark px-5 mx-1 my-1">Simple answer</button>
+            <button id="add-option" class="btn btn-dark px-5 mx-1 my-1">Choose option</button>
+            <button id="add-pair" class="btn btn-dark px-5 mx-1 my-1">Pair options</button>
+            <button id="add-image" class="btn btn-dark px-5 mx-1 my-1">Image</button>
+            <button id="add-expression" class="btn btn-dark px-5 mx-1 my-1">Mathematical expression</button>
         </div>
         <input type="submit" class="btn btn-block btn-primary mt-3" value="Submit">
     </form>
