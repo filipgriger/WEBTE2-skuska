@@ -73,6 +73,7 @@ $submissionController = new SubmissionController();
                             <?=($test['active'] ? 'Deaktivovať' : 'Aktivovať')?>
                         </button>
                         <a class="btn btn-dark" href="showTestSubmissions.php?testId=<?=$test['id']?>">Odovzdané testy</a>
+                        <a class="btn btn-dark" href="showTestProgress.php?testId=<?=$test['id']?>">Zobraziť priebeh</a>
                     </td>
                     <td>
                         <a style="display:inline-block;" class="btn btn-warning" href="pdf_export.php?testId=<?=$test['id']?>">PDF</a>

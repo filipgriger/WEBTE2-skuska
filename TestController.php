@@ -354,7 +354,21 @@ class TestController
     }
 
     public function studentStatusChanged($testId) {
-        $stmt = $this->getConnection()->prepare('select * from students_status where test_id = ?');
+        $q = 'SELECT
+                CONCAT(name, " ", surname) AS `name`,
+                students.student_code,
+                `status`,
+                submitted,
+                submissions.created_at AS submitted_at,
+                submissions.id as submission_id
+            FROM
+                students_status
+            JOIN students ON students.id = students_status.student_id
+            JOIN tests ON students_status.test_id = tests.id
+            LEFT JOIN submissions ON submissions.student_id = students.id AND submissions.test_id = tests.id
+            WHERE
+                tests.id = ?';
+        $stmt = $this->getConnection()->prepare($q);
         $stmt->bind_param('i', $testId);
         $stmt->execute();
 
@@ -362,19 +376,15 @@ class TestController
 
         $submitted = array();
         $not_submitted = array();
-        $tabbed_out = array();
 
         while ($a = $res->fetch_assoc()) {
-            if($a["status"] == 0 && $a["submitted"] == 0) {
-                array_push($tabbed_out, $a['student_id']);
-            }
             if($a["submitted"] == 0) {
-                array_push($not_submitted, $a['student_id']);
+                array_push($not_submitted, $a);
             } else {
-                array_push($submitted, $a['student_id']);
+                array_push($submitted, $a);
             }
         }
-        $status = array('tabbed_out' => $tabbed_out, 'not_submitted' => $not_submitted, 'submitted' => $submitted);
+        $status = array('not_submitted' => $not_submitted, 'submitted' => $submitted);
         $stmt->close();
 
         return $status ?? null;
