@@ -124,7 +124,7 @@ class SubmissionController
 //                break;
         }
 
-        if ($answer['type'] !== 'image') {
+        if ($answer['type'] !== 'image' && $answer['type'] !== 'expression' ) {
             $stmt = $this->getConnection()->prepare($q);
             $stmt->bind_param('ii', $answer['question_id'], $answer['answer_id']);
             $stmt->execute();
@@ -260,7 +260,22 @@ class SubmissionController
                     WHERE
                         submissions.id = ?';
 
-        $questionResults = ['total' => '', 'simple' => array(), 'option' => array(), 'pair' => array(), 'image' => array()];
+        $qExpression = 'SELECT
+                        questions.question,
+                        answers.id as answer_id,
+                        ans.MathML_expression AS expression,
+                        answers.points,
+                        questions.max_points
+                    FROM
+                        submissions
+                    JOIN tests ON tests.id = submissions.test_id
+                    JOIN questions ON questions.test_id = tests.id
+                    JOIN answers ON answers.question_id = questions.id and answers.submission_id = submissions.id
+                    JOIN answers_expression ans ON ans.answer_id = answers.id
+                    WHERE
+                        submissions.id = ?';
+
+        $questionResults = ['total' => '', 'simple' => array(), 'option' => array(), 'pair' => array(), 'image' => array(), 'expression' => array()];
 
         $stmt = $this->getConnection()->prepare('select concat(ifnull(submissions.total_points,"-")," / ",tests.total_points) as total_points from submissions join tests on tests.id = submissions.test_id where submissions.id = ?');
         $stmt->bind_param('i', $submissionId);
@@ -302,6 +317,15 @@ class SubmissionController
         $res = $stmt->get_result();
         while ($a = $res->fetch_assoc()){
             array_push($questionResults['image'], $a);
+        }
+        $stmt->close();
+
+        $stmt = $this->getConnection()->prepare($qExpression);
+        $stmt->bind_param('i', $submissionId);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($a = $res->fetch_assoc()){
+            array_push($questionResults['expression'], $a);
         }
         $stmt->close();
 
