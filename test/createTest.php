@@ -5,6 +5,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     header("Location: ../index.php");
     exit();
 }
+
+include_once '../TestController.php';
+$controller = new TestController();
 ?>
 
 <!doctype html>
@@ -30,7 +33,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <div class="col">
                 <div class="form-group">
                     <label for="test-code">Test code</label>
-                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx">
+                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx" pattern="[0-9A-Za-z]{6}" value="<?php echo $controller->generateRandomHash();?>" required>
                 </div>
             </div>
             <div class="col">
