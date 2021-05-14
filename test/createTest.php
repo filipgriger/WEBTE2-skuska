@@ -33,7 +33,7 @@ $controller = new TestController();
             <div class="col">
                 <div class="form-group">
                     <label for="test-code">Test code</label>
-                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx" pattern="[0-9A-Za-z]{6}" value="<?php echo $controller->generateRandomHash();?>" required>
+                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx" pattern="[0-9A-Za-z]{6}" value="<?php echo $controller->generateRandomHash();?>" readonly="readonly" style="color: #787878; cursor: no-drop">
                 </div>
             </div>
             <div class="col">

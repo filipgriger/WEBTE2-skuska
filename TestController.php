@@ -387,6 +387,16 @@ class TestController
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-        return $randomString;
+
+        $stmt = $this->getConnection()->prepare("SELECT * from tests WHERE code = ?");
+        $stmt->bind_param('s',$randomString);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if($stmt->num_rows >= 1) {
+            return $this->generateRandomHash();
+        } else {
+            return $randomString;
+        }
     }
 }
