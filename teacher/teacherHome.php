@@ -7,6 +7,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     header("Location: ../index.php");
     exit();
 }
+
+include '../SubmissionController.php';
+$submissionController = new SubmissionController();
 ?>
 
 <!doctype html>
@@ -48,7 +51,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     <th>Code</th>
                     <th>Created at</th>
                     <th>Status</th>
-                    <th colspan="2">Action</th>
+                    <th>Action</th>
+                    <th>Export</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,7 +73,22 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                             <?=($test['active'] ? 'Deactivate' : 'Activate')?>
                         </button>
                         <a class="btn btn-dark" href="showTestSubmissions.php?testId=<?=$test['id']?>">View submissions</a>
-                        <a class="btn btn-warning" href="pdf_export.php?testId=<?=$test['id']?>">PDF</a>
+                    </td>
+                    <td>
+                        <a style="display:inline-block;" class="btn btn-warning" href="pdf_export.php?testId=<?=$test['id']?>">PDF</a>
+                        <form style="display:inline-block;" method='post' action='exportCSV.php'>
+                            <button type='submit' class="btn btn-primary" value='Export CSV' name='Export'>CSV</button>
+                            <?php
+                            $submissions_arr = [];
+                            $submissions = $submissionController->getTestSubmissions($test['id']);
+                            foreach ($submissions as $submission):
+                                $serialize_submissions_arr = serialize($submissions_arr);
+                                $submissions_arr[] = array($submission['student_code'], $submission['name'], $submission['surname'], doubleval(substr($submission["points"], 0, strpos($submission["points"], "/")-1)));
+                            endforeach;
+                            ?>
+                            <textarea name='export_data' style='display: none;'><?php echo $serialize_submissions_arr; ?></textarea>
+                            <input type="hidden" name="test_id" value="<?php echo $test['id']; ?>">
+                        </form>
                     </td>
                 </tr>
             <?php endforeach; ?>

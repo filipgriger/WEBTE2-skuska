@@ -3,9 +3,14 @@ $filename = 'submissions/test' . $_POST["test_id"] . '.csv';
 $export_data = unserialize($_POST['export_data']);
 
 $file = fopen($filename, "w");
+fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
-foreach ($export_data as $line) {
-    fputcsv($file, $line, ";");
+if($export_data) {
+    foreach ($export_data as $line) {
+        fputcsv($file, $line, ";");
+    }
+} else {
+    fputcsv($file, array("Žiadne dáta"), ";");
 }
 
 fclose($file);

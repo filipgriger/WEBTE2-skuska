@@ -46,24 +46,24 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
             var source = new EventSource("../test/notification.php?testId=" + testId);
             source.addEventListener('evt', (e) => {
                 //console.log(JSON.parse(e.data)['not_submitted'].length);
-                if(JSON.parse(e.data)['tabbed_out'].length) {
+                if (JSON.parse(e.data)['tabbed_out'].length) {
                     $(".missing-students").html("Študenti, ktorí majú otvorený iný tab (ids): " + JSON.parse(e.data)['tabbed_out']);
                 } else {
-                    if($(".missing-students").html() != "") {
+                    if ($(".missing-students").html() != "") {
                         $(".missing-students").html("");
                     }
                 }
-                if(JSON.parse(e.data)['not_submitted'].length) {
+                if (JSON.parse(e.data)['not_submitted'].length) {
                     $(".not_submitted").html("Test ešte píše (ids): " + JSON.parse(e.data)['not_submitted']);
                 } else {
-                    if($(".not_submitted").html() != "") {
+                    if ($(".not_submitted").html() != "") {
                         $(".not_submitted").html("");
                     }
                 }
-                if(JSON.parse(e.data)['submitted'].length) {
+                if (JSON.parse(e.data)['submitted'].length) {
                     $(".submitted").html("Test už dopísali (ids): " + JSON.parse(e.data)['submitted']);
                 } else {
-                    if($(".submitted").html() != "") {
+                    if ($(".submitted").html() != "") {
                         $(".submitted").html("");
                     }
                 }
@@ -83,44 +83,34 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
 
     <hr class="border">
 
-    <form method='post' action='exportCSV.php'>
-        <input type='submit' value='Export CSV' name='Export'>
-
-        <table id="submissions-table" class="text-center display row-border hover">
-            <thead>
-            <tr>
-                <th>Student ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Total</th>
-                <th>Answers not evaluated</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $submissions_arr = [];
-            foreach ($submissions as $submission):?>
-                <tr>
-                    <td><?= $submission['student_code'] ?></td>
-                    <td><?= $submission['name'] ?></td>
-                    <td><?= $submission['surname'] ?></td>
-                    <td><?= $submission['points'] ?>b</td>
-                    <?= '<td' . ($submission['not_evaluated'] ? ' class="text-danger">' . $submission['not_evaluated'] : '>' . $submission['not_evaluated']) . '</td>' ?>
-                    <td><a href="editSubmission.php?submissionId=<?= $submission['submission_id'] ?>"
-                           class="btn btn-dark">Edit evaluation</a></td>
-                </tr>
-                <?php
-                $submissions_arr[] = array($submission['student_code'], $submission['name'], $submission['surname'], doubleval(substr($submission["points"], 0, strpos($submission["points"], "/")-1)));
-            endforeach; ?>
-            </tbody>
-        </table>
+    <table id="submissions-table" class="text-center display row-border hover">
+        <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Total</th>
+            <th>Answers not evaluated</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
         <?php
-        $serialize_submissions_arr = serialize($submissions_arr);
-        ?>
-        <textarea name='export_data' style='display: none;'><?php echo $serialize_submissions_arr; ?></textarea>
-        <input type="hidden" name="test_id" value="<?php echo $_GET['testId'] ?>">
-    </form>
+        $submissions_arr = [];
+        foreach ($submissions as $submission):?>
+            <tr>
+                <td><?= $submission['student_code'] ?></td>
+                <td><?= $submission['name'] ?></td>
+                <td><?= $submission['surname'] ?></td>
+                <td><?= $submission['points'] ?>b</td>
+                <?= '<td' . ($submission['not_evaluated'] ? ' class="text-danger">' . $submission['not_evaluated'] : '>' . $submission['not_evaluated']) . '</td>' ?>
+                <td><a href="editSubmission.php?submissionId=<?= $submission['submission_id'] ?>"
+                       class="btn btn-dark">Edit evaluation</a></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
     <div class="not_submitted"></div>
     <div class="submitted"></div>
 </div>
