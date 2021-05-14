@@ -46,4 +46,14 @@ class StudentController
         $stmt->close();
         return $student;
     }
+    
+    public function getStudentStatus($studentID,$testID){
+        $sql="SELECT submitted from students_status where student_id = $studentID && test_id=$testID";
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute();
+        $student = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        $status=$student['submitted'];
+        return $status;
+    }
 }

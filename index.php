@@ -1,22 +1,31 @@
 <?php
 session_start();
+require_once "config.php";
+require_once "pdo.php";
+require_once "StudentController.php";
+require_once "SubmissionController.php";
+
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     if ($_SESSION["role"] === 'teacher'){
         header("Location: teacher/teacherHome.php");
         exit();
-    } else {
+    }
+    else if(isset($_SESSION["studentId"]) && isset($_SESSION["testId"])){
+        $studentControl = new StudentController();
+        $student_status=$studentControl->getStudentStatus($_SESSION["studentId"], $_SESSION["testId"]);
+        //echo $student_status;
+        if($student_status==0){
+            header("Location: test/viewTest.php");
+            exit();
+        }
+    }
+    else {
         session_unset();
         session_destroy();
         header("Location: index.php");
         exit();
     }
 }
-
-
-require_once "config.php";
-require_once "pdo.php";
-require_once "StudentController.php";
-require_once "SubmissionController.php";
 
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -73,6 +82,7 @@ if(isset($_POST['studentForm'])){
                     $_SESSION["role"] = 'student';
                     $_SESSION["testCode"] = $examID;
                     $_SESSION["studentId"] = $studentId;
+                    $_SESSION["testId"] = $testId;
 
 //                    submission doesnt exist yet and test is active
                     if (!($submission = (new SubmissionController())->getSubmissionByTestAndUser($testId, $studentId)) && $test["active"]) {
