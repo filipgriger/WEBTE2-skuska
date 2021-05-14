@@ -14,7 +14,7 @@ if ($_SESSION['role'] == 'student'){
 if (isset($_POST)){
     switch ($_POST['route']){
         case 'createTest':
-            (new TestController())->createTest($teacherId, $_POST['test-code'], $_POST['questions']);
+            (new TestController())->createTest($teacherId, $_POST['test-code'],$_POST['test-time'], $_POST['questions']);
             header('Location: teacher/teacherHome.php');
             exit();
         case 'saveAnswers':
