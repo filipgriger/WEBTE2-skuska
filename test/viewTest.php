@@ -41,7 +41,7 @@ margin-right: 0; border-style:none"></div>
     ?>
                 <div class="form-group">
                     <label class="font-weight-bold" for="question<?= $question['id'] ?>"><?= $question['question'] ?><span class="pl-2">[<?= $question['max_points'] ?>b]</span></label>
-                    <input type="text" class="form-control" id="question<?= $question['id'] ?>" name="answers[simple][<?= $question['id'] ?>]" placeholder="Answer">
+                    <input type="text" class="form-control" id="question<?= $question['id'] ?>" name="answers[simple][<?= $question['id'] ?>]" placeholder="Tvoja odpoveď">
                 </div>
                 <hr class="border">
             <?php break;
@@ -99,7 +99,7 @@ margin-right: 0; border-style:none"></div>
                                                     ?>
                     <!--]" placeholder="Answer">-->
                     <button type="button" class="btn btn-dark px-5" data-toggle="modal" data-target="#question<?= $question['id'] ?>" data-backdrop="static" data-keyboard="false">
-                        Draw
+                        Kresli
                     </button>
 
                     <div class="modal fade image-question" id="question<?= $question['id'] ?>" tabindex="-1" aria-labelledby="questionLabel<?= $question['id'] ?>" aria-hidden="true">
@@ -138,7 +138,7 @@ margin-right: 0; border-style:none"></div>
         }
     } ?>
 
-    <input type="submit" class="btn btn-block btn-primary mt-3" value="Submit">
+    <input type="submit" class="btn btn-block btn-primary mt-3" value="Odovzdať test">
 </form>
 <script>
 
@@ -169,7 +169,7 @@ $(document).ready(function(){
 
 	setInterval(function(){
 		var remaining_second = $("#exam_timer").TimeCircles().getTime();
-        console.log(remaining_second);
+        //console.log(remaining_second);
 		if(remaining_second < 1)
 		{
             $( "form" ).submit();

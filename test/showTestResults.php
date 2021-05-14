@@ -18,7 +18,7 @@ $results = $controller->getSubmissionResults($submissionId);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Result</title>
+    <title>Výsledky</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/showResults.css">
@@ -38,10 +38,10 @@ $results = $controller->getSubmissionResults($submissionId);
 
     <div class="row">
         <div class="col-6 text-left">
-            <div class="h1 my-5">Tvoj vysledok:<span class="pl-4"><?=$results['total']?>b</span></div>
+            <div class="h1 my-5">Tvoj výsledok:<span class="pl-4"><?=$results['total']?>b</span></div>
         </div>
         <div class="col-6 text-right">
-            <a href="../logout.php" class="btn btn-dark px-5 my-5">Exit</a>
+            <a href="../logout.php" class="btn btn-dark px-5 my-5">Ukončiť</a>
         </div>
     </div>
 
@@ -52,12 +52,12 @@ $results = $controller->getSubmissionResults($submissionId);
 
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?=$simpleQuestion['question']?></th>
+                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$simpleQuestion['question']?></th>
             </tr>
             <tr >
-                <th>Your answer</th>
-                <th>Correct answer</th>
-                <th>Points</th>
+                <th>Tvoja odpoveď</th>
+                <th>Správna odpoveď</th>
+                <th>Body</th>
             </tr>
             <tr>
                 <td class="w-33"><?=$simpleQuestion['user_answer']?></td>
@@ -72,12 +72,12 @@ $results = $controller->getSubmissionResults($submissionId);
 
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?=$optionQuestion['question']?></th>
+                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$optionQuestion['question']?></th>
             </tr>
             <tr>
-                <th class="w-33">Your answer</th>
-                <th class="w-33">Correct answer</th>
-                <th class="w-33">Points</th>
+                <th class="w-33">Tvoja odpoveď</th>
+                <th class="w-33">Správna odpoveď</th>
+                <th class="w-33">Body</th>
             </tr>
             <tr>
                 <td><?=$optionQuestion['user_answer']?></td>
@@ -92,13 +92,13 @@ $results = $controller->getSubmissionResults($submissionId);
 
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="4" class="pl-5"><span class="pr-2">Q:</span><?=$pairQuestion['question']?></th>
+                <th colspan="4" class="pl-5"><span class="pr-2">Otázka:</span><?=$pairQuestion['question']?></th>
             </tr>
             <tr >
-                <th class="w-25">Item</th>
-                <th class="w-25">Your answer</th>
-                <th class="w-25">Correct answer</th>
-                <th class="w-25">Points</th>
+                <th class="w-25">Otázka</th>
+                <th class="w-25">Tvoja odpoveď</th>
+                <th class="w-25">Správna odpoveď</th>
+                <th class="w-25">Body</th>
             </tr>
             <?php foreach (json_decode($pairQuestion['pairs'], true) as $pair):?>
                 <tr>
@@ -117,14 +117,14 @@ $results = $controller->getSubmissionResults($submissionId);
 
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?=$imageQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$imageQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
             </tr>
             <tr >
-                <th>Your answer</th>
-                <th>Points</th>
+                <th>Tvoja odpoveď</th>
+                <th>Body</th>
             </tr>
             <tr>
-                <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal('<?=$imageQuestion['image_url']?>')">Image</button></td>
+                <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal('<?=$imageQuestion['image_url']?>')">Obrázok</button></td>
                 <td class="w-33"><?=$imageQuestion['points'] ?: '-'?> / <?=$imageQuestion['max_points']?></td>
             </tr>
         </table>
@@ -160,11 +160,11 @@ $results = $controller->getSubmissionResults($submissionId);
         
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?=$expressionQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$expressionQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
             </tr>
             <tr >
-                <th>Your answer</th>
-                <th>Points</th>
+                <th>Tvoja odpoveď</th>
+                <th>Body</th>
             </tr>
             <tr>
                 <td class="w-33"><?=$expressionQuestion['expression']; ?></td>

@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test submitted</title>
+    <title>Test</title>
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -22,8 +22,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
 </head>
 <body class="py-5">
 <div class="container my-5 text-center">
-    <h1>Test submitted</h1>
-    <a class="btn btn-dark px-5 py-2 my-3" href="../test/showTestResults.php">Show results</a>
+    <h1>Test bol úspešne odovzdaný</h1>
+    <a class="btn btn-dark px-5 py-2 my-3" href="../test/showTestResults.php">Zobraziť výsledky</a>
 </div>
 </body>
 </html>

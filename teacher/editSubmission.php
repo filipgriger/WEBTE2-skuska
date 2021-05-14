@@ -32,7 +32,7 @@ $results = $submissionController->getSubmissionResults($submission['id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit submission</title>
+    <title>Úprava hodnotenia</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="../js/editSubmissions.js"></script>
@@ -46,10 +46,10 @@ $results = $submissionController->getSubmissionResults($submission['id']);
     <div class="container py-5">
 
         <div class="d-flex justify-content-between">
-            <div class="h1">Edit submission</div>
+            <div class="h1">Úprava hodnotenia</div>
             <div class="align-self-center">
-                <a href="showTestSubmissions.php?testId=<?= $test['id'] ?>" class="btn btn-dark px-5 mx-2">Back</a>
-                <a href="teacherHome.php" class="btn btn-dark px-5 mx-2">Home</a>
+                <a href="showTestSubmissions.php?testId=<?= $test['id'] ?>" class="btn btn-dark px-5 mx-2">Návrat</a>
+                <a href="teacherHome.php" class="btn btn-dark px-5 mx-2">Domov</a>
             </div>
         </div>
         <hr class="border">
@@ -57,10 +57,10 @@ $results = $submissionController->getSubmissionResults($submission['id']);
         <table class="table text-center">
             <thead>
                 <tr>
-                    <th class="w-25">Name</th>
-                    <th class="w-25">Student ID</th>
-                    <th class="w-25">Time of submission</th>
-                    <th class="w-25">Points</th>
+                    <th class="w-25">Meno</th>
+                    <th class="w-25">ID študenta</th>
+                    <th class="w-25">Dátum odovzdania</th>
+                    <th class="w-25">Body</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,13 +79,13 @@ $results = $submissionController->getSubmissionResults($submission['id']);
 
                 <table class="table border text-center">
                     <tr class="text-left">
-                        <th colspan="4" class="pl-5"><span class="pr-2">Q:</span><?= $simpleQuestion['question'] ?></th>
+                        <th colspan="4" class="pl-5"><span class="pr-2">Otázka:</span><?= $simpleQuestion['question'] ?></th>
                     </tr>
                     <tr>
-                        <th class="w-30">Your answer</th>
-                        <th class="w-30">Correct answer</th>
-                        <th class="w-20">Points</th>
-                        <th class="w-20">Action</th>
+                        <th class="w-30">Študentova odpoveď</th>
+                        <th class="w-30">Správna odpoveď</th>
+                        <th class="w-20">Body</th>
+                        <th class="w-20">Akcia</th>
                     </tr>
                     <tr>
                         <td><?= $simpleQuestion['user_answer'] ?></td>
@@ -96,7 +96,7 @@ $results = $submissionController->getSubmissionResults($submission['id']);
                                 <span class="col-4 font-weight-bold">[<?= $simpleQuestion['max_points'] ?>]</span>
                             </div>
                         </td>
-                        <td><button class="btn btn-dark px-5 enable-input">Edit</button></td>
+                        <td><button class="btn btn-dark px-5 enable-input">Upraviť</button></td>
                     </tr>
                 </table>
                 <hr class="border">
@@ -106,13 +106,13 @@ $results = $submissionController->getSubmissionResults($submission['id']);
 
                 <table class="table border text-center">
                     <tr class="text-left">
-                        <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?= $optionQuestion['question'] ?></th>
+                        <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?= $optionQuestion['question'] ?></th>
                     </tr>
                     <tr>
-                        <th class="w-30">Your answer</th>
-                        <th class="w-30">Correct answer</th>
-                        <th class="w-20">Points</th>
-                        <th class="w-20">Action</th>
+                        <th class="w-30">Študentova odpoveď</th>
+                        <th class="w-30">Správna odpoveď</th>
+                        <th class="w-20">Body</th>
+                        <th class="w-20">Akcia</th>
                     </tr>
                     <tr>
                         <td><?= $optionQuestion['user_answer'] ?></td>
@@ -123,7 +123,7 @@ $results = $submissionController->getSubmissionResults($submission['id']);
                                 <span class="col-4 font-weight-bold">[<?= $optionQuestion['max_points'] ?>]</span>
                             </div>
                         </td>
-                        <td><button class="btn btn-dark px-5 enable-input">Edit</button></td>
+                        <td><button class="btn btn-dark px-5 enable-input">Upraviť</button></td>
                     </tr>
                 </table>
                 <hr class="border">
@@ -133,14 +133,14 @@ $results = $submissionController->getSubmissionResults($submission['id']);
 
                 <table class="table border text-center">
                     <tr class="text-left">
-                        <th colspan="4" class="pl-5"><span class="pr-2">Q:</span><?= $pairQuestion['question'] ?></th>
+                        <th colspan="4" class="pl-5"><span class="pr-2">Otázka:</span><?= $pairQuestion['question'] ?></th>
                     </tr>
                     <tr>
-                        <th class="w-20">Item</th>
-                        <th class="w-20">Your answer</th>
-                        <th class="w-20">Correct answer</th>
-                        <th class="w-20">Points</th>
-                        <th class="w-20">Action</th>
+                        <th class="w-20">Otázka</th>
+                        <th class="w-20">Študentova odpoveď</th>
+                        <th class="w-20">Správna odpoveď</th>
+                        <th class="w-20">Body</th>
+                        <th class="w-20">Akcia</th>
                     </tr>
                     <?php foreach (json_decode($pairQuestion['pairs'], true) as $pair) : ?>
                         <tr>
@@ -153,7 +153,7 @@ $results = $submissionController->getSubmissionResults($submission['id']);
                                     <span class="col-4 font-weight-bold">[<?= $pair['max_points'] ?>]</span>
                                 </div>
                             </td>
-                            <td><button class="btn btn-dark px-5 enable-input">Edit</button></td>
+                            <td><button class="btn btn-dark px-5 enable-input">Upraviť</button></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -165,15 +165,15 @@ $results = $submissionController->getSubmissionResults($submission['id']);
 
                 <table class="table border text-center">
                     <tr class="text-left">
-                        <th colspan="3" class="pl-5"><span class="pr-2">Q:</span><?= $imageQuestion['question'] ?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+                        <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?= $imageQuestion['question'] ?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
                     </tr>
                     <tr>
-                        <th class="w-33">Your answer</th>
-                        <th class="w-20">Points</th>
-                        <th class="w-33">Action</th>
+                        <th class="w-33">Študentova odpoveď</th>
+                        <th class="w-20">Body</th>
+                        <th class="w-33">Akcia</th>
                     </tr>
                     <tr>
-                        <td><button type="button" class="btn btn-success px-5" onclick="toggleModal('<?= $imageQuestion['image_url'] ?>')">Image</button></td>
+                        <td><button type="button" class="btn btn-success px-5" onclick="toggleModal('<?= $imageQuestion['image_url'] ?>')">Obrázok</button></td>
                         <td>
                             <div class="row">
                                 <input class="col-8 text-center<?= ($imageQuestion['points'] ? '" disabled value="' . $imageQuestion['points'] : ' border-danger') ?>" type="number" step="0.1" min="0" max="<?= $imageQuestion['max_points'] ?>" aria-label="Answer points" name="modifications[notPair][<?= $imageQuestion['answer_id'] ?>]">
@@ -187,9 +187,9 @@ $results = $submissionController->getSubmissionResults($submission['id']);
                         <!--</td>-->
                         <td>
                             <?php if ($imageQuestion['points']) : ?>
-                                <button class="btn btn-dark px-5 enable-input">Edit</button>
+                                <button class="btn btn-dark px-5 enable-input">Upraviť</button>
                             <?php else : ?>
-                                <div class="text-danger font-weight-bold">Please evaluate answer</div>
+                                <div class="text-danger font-weight-bold">Nutné manuálne vyhodnotenie</div>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -221,19 +221,28 @@ $results = $submissionController->getSubmissionResults($submission['id']);
                         <th colspan="4" class="pl-5"><span class="pr-2">Q:</span><?= $expressionQuestion['question'] ?></th>
                     </tr>
                     <tr>
-                        <th class="w-30">Your answer</th>
-                        <th class="w-20">Points</th>
-                        <th class="w-20">Action</th>
+                        <th class="w-30">Tvoja odpoveď</th>
+                        <th class="w-20">Body</th>
+                        <th class="w-20">Akcia</th>
                     </tr>
                     <tr>
                         <td><?= $expressionQuestion['expression'] ?></td>
                         <td>
                             <div class="row">
-                                <input disabled type="number" step="0.1" min="0" max="<?= $expressionQuestion['max_points'] ?>" class="col-8 text-center" aria-label="Answer points" name="modifications[notPair][<?= $expressionQuestion['answer_id'] ?>]" value="<?= $expressionQuestion['points'] ?>">
+                                <!--input disabled type="number" step="0.1" min="0" max="<?= $expressionQuestion['max_points'] ?>" class="col-8 text-center" aria-label="Answer points" name="modifications[notPair][<?= $expressionQuestion['answer_id'] ?>]" value="<?= $expressionQuestion['points'] ?>">
+                                <span class="col-4 font-weight-bold">[<?= $expressionQuestion['max_points'] ?>]</span>-->
+                                <input class="col-8 text-center<?= ($expressionQuestion['points'] ? '" disabled value="' . $expressionQuestion['points'] : ' border-danger') ?>" type="number" step="0.1" min="0" max="<?= $expressionQuestion['max_points'] ?>" aria-label="Answer points" name="modifications[notPair][<?= $expressionQuestion['answer_id'] ?>]">
                                 <span class="col-4 font-weight-bold">[<?= $expressionQuestion['max_points'] ?>]</span>
                             </div>
                         </td>
-                        <td><button class="btn btn-dark px-5 enable-input">Edit</button></td>
+                        <td>
+                            <!--<button class="btn btn-dark px-5 enable-input">Edit</button>-->
+                            <?php if ($expressionQuestion['points']) : ?>
+                                <button class="btn btn-dark px-5 enable-input">Upraviť</button>
+                            <?php else : ?>
+                                <div class="text-danger font-weight-bold">Nutné manuálne vyhodnotenie</div>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 </table>
                 <hr class="border">
@@ -249,7 +258,7 @@ $results = $submissionController->getSubmissionResults($submission['id']);
             <input type="hidden" name="submissionId" value="<?= $submission['id'] ?>">
             <input type="hidden" name="testId" value="<?= $test['id'] ?>">
             <input type="hidden" name="route" value="editSubmission">
-            <input type="submit" class="btn btn-dark btn-block" value="Apply changes">
+            <input type="submit" class="btn btn-dark btn-block" value="Uložiť zmeny">
         </form>
     </div>
 

@@ -815,22 +815,22 @@
         time: {
             Days: {
                 show: true,
-                text: "Days",
+                text: "Dní",
                 color: "#FC6"
             },
             Hours: {
                 show: true,
-                text: "Hours",
+                text: "Hodín",
                 color: "#9CF"
             },
             Minutes: {
                 show: true,
-                text: "Minutes",
+                text: "Minút",
                 color: "#BFB"
             },
             Seconds: {
                 show: true,
-                text: "Seconds",
+                text: "Sekúnd",
                 color: "#F99"
             }
         }

@@ -19,7 +19,7 @@ $submissionController = new SubmissionController();
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
+    <title>Domov</title>
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -32,26 +32,26 @@ $submissionController = new SubmissionController();
 <div class="container pt-5">
     <div class="row">
         <div class="col-6 text-left">
-            <div class="h6 float-left">Logged in as <span class="font-weight-bold"><?=$_SESSION['email']?></span></div>
+            <div class="h6 float-left">Prihlásený ako <span class="font-weight-bold"><?=$_SESSION['email']?></span></div>
         </div>
         <div class="col-6 text-right">
-            <a href="../logout.php" class="btn btn-dark float-right">Log Out</a>
+            <a href="../logout.php" class="btn btn-dark float-right">Odhlásiť sa</a>
         </div>
     </div>
 
     <div class="my-3">
-        <a href="../test/createTest.php" class="btn btn-dark btn-block">Create test</a>
+        <a href="../test/createTest.php" class="btn btn-dark btn-block">Vytvoriť test</a>
     </div>
-    <h2>All tests</h2>
+    <h2>Testy</h2>
     <div class="my-3">
         <table class="table text-center">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Code</th>
-                    <th>Created at</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>Kľúč</th>
+                    <th>Dátum vytvorenia</th>
+                    <th>Stav</th>
+                    <th>Akcia</th>
                     <th>Export</th>
                 </tr>
             </thead>
@@ -70,9 +70,9 @@ $submissionController = new SubmissionController();
                     </td>
                     <td>
                         <button class="btn btn-<?=($test['active'] ? 'danger deactivate-test" data-status="0' : 'success activate-test" data-status="1')?>" data-test-id="<?=$test['id']?>">
-                            <?=($test['active'] ? 'Deactivate' : 'Activate')?>
+                            <?=($test['active'] ? 'Deaktivovať' : 'Aktivovať')?>
                         </button>
-                        <a class="btn btn-dark" href="showTestSubmissions.php?testId=<?=$test['id']?>">View submissions</a>
+                        <a class="btn btn-dark" href="showTestSubmissions.php?testId=<?=$test['id']?>">Odovzdané testy</a>
                     </td>
                     <td>
                         <a style="display:inline-block;" class="btn btn-warning" href="pdf_export.php?testId=<?=$test['id']?>">PDF</a>
