@@ -82,9 +82,9 @@ $submissionController = new SubmissionController();
                             $submissions_arr = [];
                             $submissions = $submissionController->getTestSubmissions($test['id']);
                             foreach ($submissions as $submission):
-                                $serialize_submissions_arr = serialize($submissions_arr);
                                 $submissions_arr[] = array($submission['student_code'], $submission['name'], $submission['surname'], doubleval(substr($submission["points"], 0, strpos($submission["points"], "/")-1)));
                             endforeach;
+                            $serialize_submissions_arr = serialize($submissions_arr);
                             ?>
                             <textarea name='export_data' style='display: none;'><?php echo $serialize_submissions_arr; ?></textarea>
                             <input type="hidden" name="test_id" value="<?php echo $test['id']; ?>">
