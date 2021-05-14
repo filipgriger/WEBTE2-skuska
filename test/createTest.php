@@ -40,7 +40,7 @@ $controller = new TestController();
             <div class="col">
                 <div class="form-group">
                     <label for="test-time">Časový limit (v minútach)</label>
-                    <input type="number" class="form-control" id="test-time" name="test-time" placeholder="00:00" required>
+                    <input type="number" class="form-control" id="test-time" name="test-time" min="1" placeholder="00:00" required>
                 </div>
             </div>
         </div>

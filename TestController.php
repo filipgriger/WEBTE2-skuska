@@ -174,18 +174,19 @@ class TestController
         return $test;
     }
 
-    public function getAnswerByStudentAndSub($code1,$code2,$type){
+    public function getAnswerByStudentAndSub($code1, $code2, $type)
+    {
         $sql = "SELECT id from answers where submission_id = $code1 && question_id = $code2";
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute();
         $test = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        $code=$test['id'];
+        $code = $test['id'];
 
-        switch ($type){
+        switch ($type) {
             case 'simple':
                 $stmt = $this->getConnection()->prepare('select answer from answers_simple where answer_id = ?');
-                $stmt->bind_param('i',$code);
+                $stmt->bind_param('i', $code);
                 $stmt->execute();
                 $answer = $stmt->get_result()->fetch_assoc();
                 $stmt->close();
@@ -194,7 +195,7 @@ class TestController
                 break;
             case 'option':
                 $stmt = $this->getConnection()->prepare('select option_id from answers_option where answer_id = ?');
-                $stmt->bind_param('i',$code);
+                $stmt->bind_param('i', $code);
                 $stmt->execute();
                 $answer = $stmt->get_result()->fetch_assoc();
                 $stmt->close();
@@ -203,19 +204,29 @@ class TestController
                 break;
             case 'pair':
                 $stmt = $this->getConnection()->prepare('select option_id from answers_pair where answer_id = ?');
-                $stmt->bind_param('i',$code);
+                $stmt->bind_param('i', $code);
                 $stmt->execute();
                 $answer = $stmt->get_result()->fetch_assoc();
                 $stmt->close();
                 $answer = $answer['option_id'];
                 return $answer;
+                break;
             case 'image':
-                $stmt = $this->getConnection()->prepare('select answer from answers_image where answer_id = ?');
-                $stmt->bind_param('i',$code);
+                $stmt = $this->getConnection()->prepare('select image_url from answers_image where answer_id = ?');
+                $stmt->bind_param('i', $code);
                 $stmt->execute();
                 $answer = $stmt->get_result()->fetch_assoc();
                 $stmt->close();
-                $answer = $answer['answer'];
+                $answer = $answer['image_url'];
+                return $answer;
+                break;
+            case 'expression':
+                $stmt = $this->getConnection()->prepare('select MathML_expression from answers_expression where answer_id = ?');
+                $stmt->bind_param('i', $code);
+                $stmt->execute();
+                $answer = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                $answer = $answer['MathML_expression'];
                 return $answer;
                 break;
             default:

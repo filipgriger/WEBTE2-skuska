@@ -76,9 +76,16 @@ if(isset($_GET["testId"]))
 		$output .= '</table><br>';
 
 		foreach ($questions as $index => $question){
-			$output .= '<h4>Question number '.$count.'</h4><br><p>'.$question['question'].'</p><br>';
+			$output .= '<h4>Question number '.$count.'</h4><br><br><p>'.$question['question'].'</p><br><br>';
 			$answer = $testController->getAnswerByStudentAndSub($submission['submission_id'],$question['id'],$question['type']);
-			$output .= '<h4>Student answered:</h4><br><p>'.$answer.'</p><br>';
+			if($question['type']=="image"){
+				$output .= '<h4>Student answered:</h4><br><br><img src="../'.$answer.'" alt="Mountain" style="max-height: 202px; max-width: 402px;"><br><br>';
+			}
+			else{
+				$output .= '<h4>Student answered:</h4><br><br><p>'.$answer.'</p><br><br>';
+			}
+			//$output .= '<h4>Student answered:</h4><br><p>'.$answer.'</p><br>';
+
 			$count++;
 		}
 		
