@@ -244,18 +244,19 @@ CREATE TABLE IF NOT EXISTS `tests` (
   `total_points` int DEFAULT NULL,
   `active` tinyint DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `time` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `teacher_id` (`teacher_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_slovak_ci;
 
-INSERT INTO `tests` (`id`, `code`, `teacher_id`, `total_points`, `active`, `created_at`) VALUES
-(1, 'simple', 1, 4, 1, '2021-05-13 10:37:39'),
-(2, 'option', 1, 2, 1, '2021-05-13 10:38:21'),
-(3, 'pairs1', 1, 4, 1, '2021-05-13 10:39:05'),
-(4, 'image1', 1, 10, 1, '2021-05-13 10:39:24'),
-(5, 'tstAll', 1, 16, 1, '2021-05-13 10:40:47'),
-(6, 'test', 1, 3, 0, '2021-05-13 23:17:20'),
-(7, 'test2', 1, 10, 1, '2021-05-13 23:18:42');
+INSERT INTO `tests` (`id`, `code`, `teacher_id`, `total_points`, `active`, `created_at`, `time`) VALUES
+(1, 'simple', 1, 4, 1, '2021-05-13 10:37:39', 1),
+(2, 'option', 1, 2, 1, '2021-05-13 10:38:21', 1),
+(3, 'pairs1', 1, 4, 1, '2021-05-13 10:39:05', 1),
+(4, 'image1', 1, 10, 1, '2021-05-13 10:39:24', 1),
+(5, 'tstAll', 1, 16, 1, '2021-05-13 10:40:47', 1),
+(6, 'test', 1, 3, 0, '2021-05-13 23:17:20', 1),
+(7, 'test2', 1, 10, 1, '2021-05-13 23:18:42', 1);
 
 ALTER TABLE `answers`
   ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`submission_id`) REFERENCES `submissions` (`id`),
