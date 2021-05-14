@@ -404,4 +404,10 @@ class SubmissionController
         $stmt->close();
     }
 
+    public function updateStatusTestSubmitted($studentId, $testId) {
+        $stmt = $this->getConnection()->prepare('update students_status set submitted = 1 where student_id = ? and test_id = ?');
+        $stmt->bind_param('ii', $studentId, $testId);
+        $stmt->execute();
+        $stmt->close();
+    }
 }

@@ -26,6 +26,8 @@ if (isset($_POST)){
 
             $submissionController->evaluateSubmission($submissionId);
 
+            $submissionController->updateStatusTestSubmitted($studentId, $_POST['test-id']);
+
             $_SESSION['submissionId'] = $submissionId;
             header('Location: templates/testSubmitted.php');
             exit();

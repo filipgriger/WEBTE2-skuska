@@ -354,18 +354,29 @@ class TestController
     }
 
     public function studentStatusChanged($testId) {
-        $stmt = $this->getConnection()->prepare('select * from students_status where test_id = ? and status = 0');
+        $stmt = $this->getConnection()->prepare('select * from students_status where test_id = ?');
         $stmt->bind_param('i', $testId);
         $stmt->execute();
 
         $res = $stmt->get_result();
 
-        $students = array();
-        while ($a = $res->fetch_assoc()){
-            array_push($students, $a["student_id"]);
+        $submitted = array();
+        $not_submitted = array();
+        $tabbed_out = array();
+
+        while ($a = $res->fetch_assoc()) {
+            if($a["status"] == 0 && $a["submitted"] == 0) {
+                array_push($tabbed_out, $a['student_id']);
+            }
+            if($a["submitted"] == 0) {
+                array_push($not_submitted, $a['student_id']);
+            } else {
+                array_push($submitted, $a['student_id']);
+            }
         }
+        $status = array('tabbed_out' => $tabbed_out, 'not_submitted' => $not_submitted, 'submitted' => $submitted);
         $stmt->close();
 
-        return $students ?? null;
+        return $status ?? null;
     }
 }

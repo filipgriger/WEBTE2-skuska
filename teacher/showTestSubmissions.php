@@ -45,11 +45,27 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
 
             var source = new EventSource("../test/notification.php?testId=" + testId);
             source.addEventListener('evt', (e) => {
-                //console.log(JSON.parse(e.data));
-                if(e.data) {
-                    $(".missing-students").html("Študenti, ktorí majú otvorený iný tab (ids): " + JSON.parse(e.data));
+                //console.log(JSON.parse(e.data)['not_submitted'].length);
+                if(JSON.parse(e.data)['tabbed_out'].length) {
+                    $(".missing-students").html("Študenti, ktorí majú otvorený iný tab (ids): " + JSON.parse(e.data)['tabbed_out']);
                 } else {
-                    $(".missing-students").html("");
+                    if($(".missing-students").html() != "") {
+                        $(".missing-students").html("");
+                    }
+                }
+                if(JSON.parse(e.data)['not_submitted'].length) {
+                    $(".not_submitted").html("Test ešte píše (ids): " + JSON.parse(e.data)['not_submitted']);
+                } else {
+                    if($(".not_submitted").html() != "") {
+                        $(".not_submitted").html("");
+                    }
+                }
+                if(JSON.parse(e.data)['submitted'].length) {
+                    $(".submitted").html("Test už dopísali (ids): " + JSON.parse(e.data)['submitted']);
+                } else {
+                    if($(".submitted").html() != "") {
+                        $(".submitted").html("");
+                    }
                 }
             });
         }
@@ -105,6 +121,8 @@ $submissions = $submissionController->getTestSubmissions($test['id']);
         <textarea name='export_data' style='display: none;'><?php echo $serialize_submissions_arr; ?></textarea>
         <input type="hidden" name="test_id" value="<?php echo $_GET['testId'] ?>">
     </form>
+    <div class="not_submitted"></div>
+    <div class="submitted"></div>
 </div>
 </div>
 </body>
