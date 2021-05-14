@@ -26,24 +26,30 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
 <div class="container py-5">
     <h1>New Test</h1>
     <form action="../router.php" method="post">
-        <div class="form-group">
-            <label for="test-code">Test code</label>
-            <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="test-code">Test code</label>
+                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="test-code">Time limit (in minutes)</label>
+                    <input type="number" class="form-control" id="test-time" name="test-time" placeholder="00:00">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="test-code">Time limit (in minutes)</label>
-            <input type="number" class="form-control" id="test-time" name="test-time" placeholder="00:00">
-        </div>
+
         <hr class="border">
         <input type="hidden" name="route" value="createTest">
         <div id="controls" class="text-center">
-            <button id="add-simple" class="btn btn-dark px-5 mx-3">Simple answer</button>
-            <button id="add-option" class="btn btn-dark px-5 mx-3">Choose option</button>
-            <button id="add-pair" class="btn btn-dark px-5 mx-3">Pair options</button>
-            <button id="add-image" class="btn btn-dark px-5 mx-3">Image</button>
-            <br>
-            <br>
-            <button id="add-expression" class="btn btn-dark px-5 mx-3">Mathematical expression</button>
+            <div class="w-100 font-weight-bold mb-2">Add question</div>
+            <button id="add-simple" class="btn btn-dark px-5 mx-1">Simple answer</button>
+            <button id="add-option" class="btn btn-dark px-5 mx-1">Choose option</button>
+            <button id="add-pair" class="btn btn-dark px-5 mx-1">Pair options</button>
+            <button id="add-image" class="btn btn-dark px-5 mx-1">Image</button>
+            <button id="add-expression" class="btn btn-dark px-5 mx-1">Mathematical expression</button>
         </div>
         <input type="submit" class="btn btn-block btn-primary mt-3" value="Submit">
     </form>

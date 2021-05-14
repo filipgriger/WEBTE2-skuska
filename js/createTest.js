@@ -36,7 +36,7 @@ $(function () {
             '<div class="form-group row">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][type]" value="simple">' +
             '<div class="col-5">' +
-            '<label class="font-weight-bold" for="q-simple' + simpleCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '</label>' +
+            '<label class="font-weight-bold" for="q-simple' + simpleCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + ' [simple]</label>' +
             '<input type="text" id="q-simple' + simpleCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-5">' +
@@ -58,7 +58,7 @@ $(function () {
             '<div class="form-group row" data-option-count="1" data-index="' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="option">' +
             '<div class="col-5">' +
-            '<label class="font-weight-bold" for="q-option' + optionCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '</label>' +
+            '<label class="font-weight-bold" for="q-option' + optionCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + ' [options]</label>' +
             '<input type="text" id="q-option' + optionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-5">' +
@@ -97,7 +97,7 @@ $(function () {
             '<div class="form-group row" data-pair-count="0" data-index="' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="pair">' +
             '<div class="col-10">' +
-            '<label class="font-weight-bold" for="q-pair' + pairCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '</label>' +
+            '<label class="font-weight-bold" for="q-pair' + pairCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + ' [pairs]</label>' +
             '<input type="text" id="q-pair' + pairCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
@@ -139,7 +139,7 @@ $(function () {
             '<div class="form-group row">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][type]" value="image">' +
             '<div class="col-10">' +
-            '<label class="font-weight-bold" for="q-image' + imageCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '</label>' +
+            '<label class="font-weight-bold" for="q-image' + imageCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + ' [drawing]</label>' +
             '<input type="text" id="q-image' + imageCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
@@ -157,7 +157,7 @@ $(function () {
             '<div class="form-group row">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][type]" value="expression">' +
             '<div class="col-10">' +
-            '<label class="font-weight-bold" for="q-expression' + expressionCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '</label>' +
+            '<label class="font-weight-bold" for="q-expression' + expressionCount + '">Question ' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + ' [expression]</label>' +
             '<input type="text" id="q-expression' + expressionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
