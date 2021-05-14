@@ -25,7 +25,7 @@ include '../templates/viewTestHead.html';
 
 $controller->createStudentStatus($_SESSION['studentId'], $_SESSION['testCode']);
 ?>
-<div id="exam_timer" data-timer="<?php echo $duration; ?>" style="max-width:200px; width: 100%; height: 100px; margin-left: auto; 
+<div id="exam_timer" data-timer="<?php echo $duration; ?>" style="max-width:300px; width: 100%; height: 100px; margin-left: auto; 
 margin-right: 0; border-style:none"></div>
 <h1>Test <?=$test['code']?></h1>
 
@@ -144,7 +144,17 @@ margin-right: 0; border-style:none"></div>
 
 $(document).ready(function(){
 
-	$("#exam_timer").TimeCircles({ 
+    if(<?php echo $duration; ?>>3600){
+        $("#exam_timer").TimeCircles({ 
+		time:{
+			Days:{
+				show: false
+			}
+		}
+	}); 
+    }
+    else{
+        $("#exam_timer").TimeCircles({ 
 		time:{
 			Days:{
 				show: false
@@ -154,9 +164,12 @@ $(document).ready(function(){
 			}
 		}
 	});
+    }
+
 
 	setInterval(function(){
 		var remaining_second = $("#exam_timer").TimeCircles().getTime();
+        console.log(remaining_second);
 		if(remaining_second < 1)
 		{
             $( "form" ).submit();

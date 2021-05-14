@@ -40,18 +40,28 @@ if(isset($_POST['teacherRegister'])){
         }
     }
 
-    // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
-    } else{
-        $password = trim($_POST["password"]);
-    }
+        // Validate password
+        if(empty(trim($_POST["password"]))){
+            $password_err = "Please enter a password.";     
+        } elseif(strlen(trim($_POST["password"])) < 8){
+            $password_err = "Password must have atleast 8 characters.";
+        } else{
+            $password = trim($_POST["password"]);
+        }
+        
+        // Validate confirm password
+        if(empty(trim($_POST["confirm_password"]))){
+            $confirm_password_err = "Please confirm password.";     
+        } else{
+            $confirm_password = trim($_POST["confirm_password"]);
+            if(empty($password_err) && ($password != $confirm_password)){
+                $confirm_password_err = "Password did not match.";
+            }
+        }
 
 
     // Check input errors before inserting in database
-    if(empty($email_err) && empty($password_err)){
+    if(empty($email_err) && empty($password_err) && empty($confirm_password_err)){
 
         // Prepare an insert statement
         $sql = "INSERT INTO teachers(name,surname,email,password) VALUES (:name,:surname,:email,:password)";
@@ -101,8 +111,24 @@ if(isset($_POST['teacherRegister'])){
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
+          <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css" />
     <link href="css/loginForm.css" rel="stylesheet">
+    <style type="text/css">
+
+        #toggle_pwd, #toggle_cpwd
+        {
+            cursor: pointer;
+        }
+        .field_icon {
+  float: right;
+  margin-left: -60px;
+  margin-top: -33px;
+  position: relative;
+  z-index: 4;
+  width: 50px;
+}
+    </style>
 </head>
 <body class="text-center bg-light">
 <div class="cover-container pt-5 d-flex mx-auto flex-column">
@@ -127,7 +153,15 @@ if(isset($_POST['teacherRegister'])){
 
             <div class="form-floating">
                 <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password" name="password" placeholder="password" title="aspoň 8 znakov, číslo, veľké a malé písmeno + znak" required>
+                <span id="toggle_pwd" class="fa fa-fw fa-eye field_icon"></span>
                 <label for="password">Password</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="confirm_password" name="confirm_password" placeholder="password" title="aspoň 8 znakov, číslo, veľké a malé písmeno + znak" required>
+                <span id="toggle_cpwd" class="fa fa-fw fa-eye field_icon"></span>
+                <label for="confirm_password">Confirm Password</label>
+                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
 
             <button class="w-100 btn btn-lg btn-primary my-3" name="teacherRegister" type="submit">Registruj sa</button>
@@ -143,4 +177,20 @@ if(isset($_POST['teacherRegister'])){
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
-</html>
+        <script type="text/javascript">
+        $(function () {
+            $("#toggle_pwd").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+               var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+                $("#password").attr("type", type);
+            });
+        });
+        $(function () {
+            $("#toggle_cpwd").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+               var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+                $("#confirm_password").attr("type", type);
+            });
+        });
+    </script>
+        </html>
