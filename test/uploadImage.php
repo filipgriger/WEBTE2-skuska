@@ -32,4 +32,5 @@ if (!is_dir($basePath.$_SESSION['studentId'])) {
 file_put_contents($basePath.$_SESSION['studentId'].DIRECTORY_SEPARATOR.'question-'.$question_id.'.png', $data);
 
 echo 'images/submissions/students/'.$_SESSION["studentId"].'/question-'.$question_id.'.png';
+$_SESSION['question'.$question_id] = 'images/submissions/students/'.$_SESSION["studentId"].'/question-'.$question_id.'.png';
 ?>

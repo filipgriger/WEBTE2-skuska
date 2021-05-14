@@ -22,7 +22,6 @@ else{
 }
 
 include '../templates/viewTestHead.html';
-
 $controller->createStudentStatus($_SESSION['studentId'], $_SESSION['testCode']);
 ?>
 <div id="exam_timer" data-timer="<?php echo $duration; ?>" style="max-width:300px; width: 100%; height: 100px; margin-left: auto; 

@@ -5,7 +5,8 @@ $(document).ready(function () {
             function createPaint(parent) {
                 var canvas = elt('canvas', {
                     width: 600,
-                    height: 400
+                    height: 400,
+                    id: 'canvas'+i
                 });
                 var cx = canvas.getContext('2d');
                 var toolbar = elt('div', {
@@ -23,6 +24,8 @@ $(document).ready(function () {
                 document.getElementById('delete' + i).addEventListener('click', function () {
                     cx.clearRect(0, 0, cx.canvas.width, cx.canvas.height);
                 });
+
+                checkExistingImage(cx.canvas.toDataURL(), i)
             }
 
             function elt(name, attributes) {
@@ -63,7 +66,7 @@ $(document).ready(function () {
             }
 
             // loads an image from a URL and replaces the contents of the canvas
-            /*function loadImageURL(cx, url) {
+            function loadImageURL(cx, url) {
               var image = document.createElement('img');
               image.addEventListener('load', function() {
                 var color = cx.fillStyle,
@@ -76,7 +79,7 @@ $(document).ready(function () {
                 cx.lineWidth = size;
               });
               image.src = url;
-            }*/
+            }
 
             var controls = Object.create(null);
 
@@ -261,6 +264,21 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         console.log("Obrázok uložený pod názvom " + data);
+                    }
+                });
+            }
+
+            function checkExistingImage(image, id) {
+                $.ajax({
+                    url: './checkExistingImage.php',
+                    method: 'POST',
+                    data: {
+                        image: image, id: id
+                    },
+                    success: function (data) {
+                        if(data) {
+                            loadImageURL(document.querySelector("#canvas"+i).getContext('2d'), data);
+                        }
                     }
                 });
             }
