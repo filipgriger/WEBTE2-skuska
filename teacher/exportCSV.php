@@ -6,6 +6,7 @@ $file = fopen($filename, "w");
 fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
 if($export_data) {
+    fputcsv($file, array("ID", "Meno", "Priezvisko", "Počet bodov"), ";");
     foreach ($export_data as $line) {
         fputcsv($file, $line, ";");
     }
