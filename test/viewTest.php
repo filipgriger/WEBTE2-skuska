@@ -28,7 +28,6 @@ $controller->createStudentStatus($_SESSION['studentId'], $_SESSION['testCode']);
 <div id="exam_timer" data-timer="<?php echo $duration; ?>" style="max-width:200px; width: 100%; height: 100px; margin-left: auto; 
 margin-right: 0; border-style:none"></div>
 <h1>Test <?=$test['code']?></h1>
-?>
 
 <form action="../router.php" method="post">
     <input type="hidden" name="test-id" value="<?= $test['id'] ?>">
