@@ -25,7 +25,7 @@ if (!($test = $testController->getTest($_GET['testId']))) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test Progress</title>
+    <title>Priebeh testu <?= $test['code'] ?></title>
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -40,7 +40,7 @@ if (!($test = $testController->getTest($_GET['testId']))) {
 
             source.addEventListener('evt', (e) => {
                 let data = JSON.parse(e.data);
-                console.log(data);
+                //console.log(data);
                 let inProgress = $('#in-progress');
                 let finished = $('#finished');
                 inProgress.empty();
@@ -50,7 +50,7 @@ if (!($test = $testController->getTest($_GET['testId']))) {
                     let row = '<tr>' +
                     '<td>' + item.name + '</td>' +
                     '<td>' + item.student_code + '</td>' +
-                    '<td>' + (item.status ? 'Writing' : '<span class="text-danger font-weight-bold">Tabbed out</span>') + '</td>' +
+                    '<td>' + (item.status ? 'Píše' : '<span class="text-danger font-weight-bold">V inom okne</span>') + '</td>' +
                         '</tr>';
                     inProgress.append($(row));
                 });
@@ -59,7 +59,7 @@ if (!($test = $testController->getTest($_GET['testId']))) {
                         '<td>' + item.name + '</td>' +
                         '<td>' + item.student_code + '</td>' +
                         '<td>' + item.submitted_at + '</td>' +
-                        '<td><a class="btn btn-dark" href="editSubmission.php?submissionId=' + item.submission_id + '">Show</a></td>' +
+                        '<td><a class="btn btn-dark" href="editSubmission.php?submissionId=' + item.submission_id + '">Zobraziť</a></td>' +
                         '</tr>';
                     finished.append($(row));
                 });
@@ -71,8 +71,8 @@ if (!($test = $testController->getTest($_GET['testId']))) {
 <div class="container py-5">
 
     <div class="d-flex justify-content-between">
-        <div class="h1">Test <<span class="font-italic"><?= $test['code'] ?></span>> progress</div>
-        <div class="align-self-center"><a href="teacherHome.php" class="btn btn-dark px-5">Home</a></div>
+        <div class="h1">Priebeh testu <<span class="font-italic"><?= $test['code'] ?></span>></div>
+        <div class="align-self-center"><a href="teacherHome.php" class="btn btn-dark px-5">Domov</a></div>
     </div>
 
 
@@ -81,27 +81,27 @@ if (!($test = $testController->getTest($_GET['testId']))) {
 
     <div class="row">
         <div class="col-6 border-right">
-            <div class="h2">In progress</div>
+            <div class="h2">Test píšu</div>
             <table class="table text-center">
                 <thead>
                 <tr>
-                    <th class="w-33">Name</th>
-                    <th class="w-33">Student ID</th>
-                    <th class="w-33">Status</th>
+                    <th class="w-33">Meno</th>
+                    <th class="w-33">ID študenta</th>
+                    <th class="w-33">Stav</th>
                 </tr>
                 </thead>
                 <tbody id="in-progress"></tbody>
             </table>
         </div>
         <div class="col-6">
-            <div class="h2">Finished</div>
+            <div class="h2">Test odovzdali</div>
             <table class="table text-center">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Student ID</th>
-                    <th>Submitted</th>
-                    <th>Action</th>
+                    <th>Meno</th>
+                    <th>ID študenta</th>
+                    <th>Odovzdané</th>
+                    <th>Akcia</th>
                 </tr>
                 </thead>
                 <tbody id="finished"></tbody>
