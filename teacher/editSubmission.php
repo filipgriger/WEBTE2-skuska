@@ -161,11 +161,9 @@ $results = $submissionController->getSubmissionResults($submission['id']);
             <?php endforeach; ?>
 
             <?php foreach ($results['image'] as $imageQuestion) : ?>
-                <!-- TODO: či už učiteľ otázku vyhodnotil, alebo ešte nie, podľa toho zobraziť buď body alebo tento text -->
-
                 <table class="table border text-center">
                     <tr class="text-left">
-                        <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?= $imageQuestion['question'] ?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+                        <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?= $imageQuestion['question'] ?></th>
                     </tr>
                     <tr>
                         <th class="w-33">Študentova odpoveď</th>
@@ -180,11 +178,6 @@ $results = $submissionController->getSubmissionResults($submission['id']);
                                 <span class="col-4 font-weight-bold">[<?= $imageQuestion['max_points'] ?>]</span>
                             </div>
                         </td>
-                        <!--                    <td>--><? //=$imageQuestion['points']
-                                                        ?>
-                        <!-- / --><? //=$imageQuestion['max_points']
-                                    ?>
-                        <!--</td>-->
                         <td>
                             <?php if ($imageQuestion['points']) : ?>
                                 <button class="btn btn-dark px-5 enable-input">Upraviť</button>
