@@ -31,6 +31,15 @@ $results = $controller->getSubmissionResults($submissionId);
             crossorigin="anonymous"></script>
 
             <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+    <style>
+        p {
+            margin-top: 1rem !important;
+        }
+
+        .table td, .table th {
+            vertical-align: middle !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -48,18 +57,25 @@ $results = $controller->getSubmissionResults($submissionId);
 
     <hr class="border">
 
-    <?php foreach ($results['simple'] as $simpleQuestion):?>
+    <?php foreach ($results['simple'] as $simpleQuestion):
+        $background = '';
+        if($simpleQuestion['points'] == $simpleQuestion['max_points']) {
+            $background = 'style="background: #28a74540"';
+        } else {
+            $background = 'style="background: #dc354540"';
+        }
+        ?>
 
         <table class="table border text-center">
             <tr class="text-left">
                 <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$simpleQuestion['question']?></th>
             </tr>
-            <tr >
+            <tr>
                 <th>Tvoja odpoveď</th>
                 <th>Správna odpoveď</th>
                 <th>Body</th>
             </tr>
-            <tr>
+            <tr <?php echo $background;?>>
                 <td class="w-33"><?=$simpleQuestion['user_answer']?></td>
                 <td class="w-33"><?=$simpleQuestion['correct_answer']?></td>
                 <td class="w-33"><?=$simpleQuestion['points']?> / <?=$simpleQuestion['max_points']?></td>
@@ -68,7 +84,14 @@ $results = $controller->getSubmissionResults($submissionId);
         <hr class="border">
     <?php endforeach; ?>
 
-    <?php foreach ($results['option'] as $optionQuestion):?>
+    <?php foreach ($results['option'] as $optionQuestion):
+        $background = '';
+        if($optionQuestion['points'] == $optionQuestion['max_points']) {
+            $background = 'style="background: #28a74540"';
+        } else {
+            $background = 'style="background: #dc354540"';
+        }
+        ?>
 
         <table class="table border text-center">
             <tr class="text-left">
@@ -79,7 +102,7 @@ $results = $controller->getSubmissionResults($submissionId);
                 <th class="w-33">Správna odpoveď</th>
                 <th class="w-33">Body</th>
             </tr>
-            <tr>
+            <tr <?php echo $background;?>>
                 <td><?=$optionQuestion['user_answer']?></td>
                 <td><?=$optionQuestion['correct_answer']?></td>
                 <td><?=$optionQuestion['points']?> / <?=$optionQuestion['max_points']?></td>
@@ -100,8 +123,15 @@ $results = $controller->getSubmissionResults($submissionId);
                 <th class="w-25">Správna odpoveď</th>
                 <th class="w-25">Body</th>
             </tr>
-            <?php foreach (json_decode($pairQuestion['pairs'], true) as $pair):?>
-                <tr>
+            <?php foreach (json_decode($pairQuestion['pairs'], true) as $pair):
+                $background = '';
+                if($pair['points'] == $pair['max_points']) {
+                    $background = 'style="background: #28a74540"';
+                } else {
+                    $background = 'style="background: #dc354540"';
+                }
+                ?>
+                <tr <?php echo $background;?>>
                     <td><?=$pair['left']?></td>
                     <td><?=$pair['user_answer']?></td>
                     <td><?=$pair['correct_answer']?></td>
@@ -112,18 +142,24 @@ $results = $controller->getSubmissionResults($submissionId);
         <hr class="border">
     <?php endforeach; ?>
 
-    <?php foreach ($results['image'] as $imageQuestion):?>
-    <!-- TODO: či už učiteľ otázku vyhodnotil, alebo ešte nie, podľa toho zobraziť buď body alebo tento text -->
+    <?php foreach ($results['image'] as $imageQuestion):
+        $text = '';
+        $background = '';
+        if(!$imageQuestion['points']) {
+            $text = '<span style="color: #dc3545;">(Učiteľ zatiaľ nevyhodnotil otázku)</span>';
+            $background = 'style="background: #FFFF0040"';
+        }
+        ?>
 
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$imageQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$imageQuestion['question']?> <?php echo $text;?></th>
             </tr>
             <tr >
                 <th>Tvoja odpoveď</th>
                 <th>Body</th>
             </tr>
-            <tr>
+            <tr <?php echo $background;?>>
                 <td class="w-33"><button type="button" class="btn btn-success" onclick="toggleModal('<?=$imageQuestion['image_url']?>')">Obrázok</button></td>
                 <td class="w-33"><?=$imageQuestion['points'] ?: '-'?> / <?=$imageQuestion['max_points']?></td>
             </tr>
@@ -155,18 +191,24 @@ $results = $controller->getSubmissionResults($submissionId);
         <hr class="border">
     <?php endforeach; ?>
 
-    <?php foreach ($results['expression'] as $expressionQuestion):?>
-    <!-- TODO: či už učiteľ otázku vyhodnotil, alebo ešte nie, podľa toho zobraziť buď body alebo tento text -->
+    <?php foreach ($results['expression'] as $expressionQuestion):
+        $text = '';
+        $background = '';
+        if(!$expressionQuestion['points']) {
+            $text = '<span style="color: #dc3545;">(Učiteľ zatiaľ nevyhodnotil otázku)</span>';
+            $background = 'style="background: #FFFF0040"';
+        }
+        ?>
         
         <table class="table border text-center">
             <tr class="text-left">
-                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$expressionQuestion['question']?> (Učiteľ zatiaľ nevyhodnotil otázku)</th>
+                <th colspan="3" class="pl-5"><span class="pr-2">Otázka:</span><?=$expressionQuestion['question']?> <?php echo $text;?></th>
             </tr>
             <tr >
                 <th>Tvoja odpoveď</th>
                 <th>Body</th>
             </tr>
-            <tr>
+            <tr <?php echo $background;?>>
                 <td class="w-33"><?=$expressionQuestion['expression']; ?></td>
                 <td class="w-33"><?=$expressionQuestion['points'] ?: '-'?> / <?=$expressionQuestion['max_points']?></td>
             </tr>
