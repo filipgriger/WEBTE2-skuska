@@ -46,10 +46,10 @@ $results = $controller->getSubmissionResults($submissionId);
 <div class="container">
 
     <div class="row">
-        <div class="col-6 text-left">
+        <div class="col-10 text-left">
             <div class="h1 my-5">Tvoj výsledok:<span class="pl-4"><?=$results['total']?>b</span></div>
         </div>
-        <div class="col-6 text-right">
+        <div class="col-2">
             <a href="../logout.php" class="btn btn-dark px-5 my-5">Ukončiť</a>
         </div>
     </div>
