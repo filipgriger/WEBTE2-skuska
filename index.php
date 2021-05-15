@@ -177,7 +177,7 @@ if(isset($_POST['teacherForm'])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Log In</title>
+    <title>Prihlásenie</title>
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -193,10 +193,10 @@ if(isset($_POST['teacherForm'])){
         <hr>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" id="studentButton" href="#">Student</a>
+                <a class="nav-link active" id="studentButton" href="#">Študent</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="teacherButton" href="#">Teacher</a>
+                <a class="nav-link" id="teacherButton" href="#">Učiteľ</a>
             </li>
         </ul>
 
@@ -237,7 +237,7 @@ if(isset($_POST['teacherForm'])){
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
-                <label for="password">Password</label>
+                <label for="password">Heslo</label>
             </div>
             <input type="hidden" name="action" value="loginTeacher">
             <button class="w-100 btn btn-lg btn-primary my-3" name="teacherForm" type="submit">Prihlásiť sa</button>

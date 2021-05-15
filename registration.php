@@ -4,20 +4,20 @@ require_once "config.php";
 require_once "pdo.php";
 
 // Define variables and initialize with empty values
-$email = $password =  "";
-$email_err = $password_err =  "";
+$email = $password = "";
+$email_err = $password_err = "";
 
 // Processing form data when form is submitted
-if(isset($_POST['teacherRegister'])){
+if (isset($_POST['teacherRegister'])) {
 
     // Validate username
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter a username.";
-    } else{
+    if (empty(trim($_POST["email"]))) {
+        $email_err = "Prosím zadaj tvoj e-mail.";
+    } else {
         // Prepare a select statement
         $sql = "SELECT id FROM teachers WHERE email = :email";
 
-        if($stmt = $pdo->prepare($sql)){
+        if ($stmt = $pdo->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":email", $param_email, PDO::PARAM_STR);
 
@@ -25,14 +25,14 @@ if(isset($_POST['teacherRegister'])){
             $param_email = trim($_POST["email"]);
 
             // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                if($stmt->rowCount() == 1){
-                    $email_err = "This user already exists.";
-                } else{
+            if ($stmt->execute()) {
+                if ($stmt->rowCount() == 1) {
+                    $email_err = "Užívateľ v databáze už existuje.";
+                } else {
                     $email = trim($_POST["email"]);
                 }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
+            } else {
+                echo "Nastala neočakávaná chyba.";
             }
 
             // Close statement
@@ -40,33 +40,33 @@ if(isset($_POST['teacherRegister'])){
         }
     }
 
-        // Validate password
-        if(empty(trim($_POST["password"]))){
-            $password_err = "Please enter a password.";     
-        } elseif(strlen(trim($_POST["password"])) < 8){
-            $password_err = "Password must have atleast 8 characters.";
-        } else{
-            $password = trim($_POST["password"]);
+    // Validate password
+    if (empty(trim($_POST["password"]))) {
+        $password_err = "Prosím zadaj heslo.";
+    } elseif (strlen(trim($_POST["password"])) < 8) {
+        $password_err = "Heslo musí mať aspoň 8 znakov.";
+    } else {
+        $password = trim($_POST["password"]);
+    }
+
+    // Validate confirm password
+    if (empty(trim($_POST["confirm_password"]))) {
+        $confirm_password_err = "Prosím potvrď heslo.";
+    } else {
+        $confirm_password = trim($_POST["confirm_password"]);
+        if (empty($password_err) && ($password != $confirm_password)) {
+            $confirm_password_err = "Heslá sa nezhodujú.";
         }
-        
-        // Validate confirm password
-        if(empty(trim($_POST["confirm_password"]))){
-            $confirm_password_err = "Please confirm password.";     
-        } else{
-            $confirm_password = trim($_POST["confirm_password"]);
-            if(empty($password_err) && ($password != $confirm_password)){
-                $confirm_password_err = "Password did not match.";
-            }
-        }
+    }
 
 
     // Check input errors before inserting in database
-    if(empty($email_err) && empty($password_err) && empty($confirm_password_err)){
+    if (empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
 
         // Prepare an insert statement
         $sql = "INSERT INTO teachers(name,surname,email,password) VALUES (:name,:surname,:email,:password)";
 
-        if($stmt = $pdo->prepare($sql)){
+        if ($stmt = $pdo->prepare($sql)) {
             $param_password = password_hash($password, PASSWORD_BCRYPT); // Creates a password hash
             $param_name = trim($_POST["name"]);
             $param_surname = trim($_POST["surname"]);
@@ -80,21 +80,19 @@ if(isset($_POST['teacherRegister'])){
             // Set parameters
 
 
-
             // Attempt to execute the prepared statement
-            if($stmt->execute()){
+            if ($stmt->execute()) {
                 // Redirect to login page
                 echo '<span style="color:#00ff00;text-align:center;"><b>Úspešne ste sa zaregistrovali!</b></span>';
-            } else{
-                echo "Something went wrong. Please try again later.";
+            } else {
+                echo "Nastala neočakávaná chyba.";
             }
 
             // Close statement
             unset($stmt);
         }
-    }
-    else{
-        echo '<span style="color:#FF0000;text-align:center;"><b>Email sa už používa!</b></span>';
+    } else {
+        echo '<span style="color:#FF0000;text-align:center;"><b>Chyba pri registrácii!</b></span>';
     }
 
     // Close connection
@@ -107,27 +105,27 @@ if(isset($_POST['teacherRegister'])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration</title>
+    <title>Registrácia</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-          <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        rel="stylesheet" type="text/css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css"/>
     <link href="css/loginForm.css" rel="stylesheet">
     <style type="text/css">
 
-        #toggle_pwd, #toggle_cpwd
-        {
+        #toggle_pwd, #toggle_cpwd {
             cursor: pointer;
         }
+
         .field_icon {
-  float: right;
-  margin-left: -60px;
-  margin-top: -33px;
-  position: relative;
-  z-index: 4;
-  width: 50px;
-}
+            float: right;
+            margin-left: -60px;
+            margin-top: -33px;
+            position: relative;
+            z-index: 4;
+            width: 50px;
+        }
     </style>
 </head>
 <body class="text-center bg-light">
@@ -137,30 +135,36 @@ if(isset($_POST['teacherRegister'])){
 
         <form id="teacherRegister" action="registration.php" method="post" class="mb-1">
             <div class="form-floating">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['name']) echo $_POST['name'];?>" required>
                 <label for="name">Meno</label>
             </div>
 
             <div class="form-floating">
-                <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname" required>
+                <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname" value="<?php if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['surname']) echo $_POST['surname'];?>" required>
                 <label for="surname">Priezvisko</label>
             </div>
 
             <div class="form-floating">
-                <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="email" name="email" placeholder="email@example.com" required>
+                <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="email"
+                       name="email" placeholder="email@example.com" value="<?php if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['email']) echo $_POST['email'];?>" required>
                 <label for="email">E-mail</label>
             </div>
 
             <div class="form-floating">
-                <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password" name="password" placeholder="password" title="aspoň 8 znakov, číslo, veľké a malé písmeno + znak" required>
+                <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password"
+                       name="password" placeholder="password" title="aspoň 8 znakov, číslo, veľké a malé písmeno + znak"
+                       required>
                 <span id="toggle_pwd" class="fa fa-fw fa-eye field_icon"></span>
-                <label for="password">Password</label>
+                <label for="password">Heslo</label>
             </div>
 
             <div class="form-floating">
-                <input type="password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="confirm_password" name="confirm_password" placeholder="password" title="aspoň 8 znakov, číslo, veľké a malé písmeno + znak" required>
+                <input type="password"
+                       class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="confirm_password" name="confirm_password"
+                       placeholder="password" title="aspoň 8 znakov, číslo, veľké a malé písmeno + znak" required>
                 <span id="toggle_cpwd" class="fa fa-fw fa-eye field_icon"></span>
-                <label for="confirm_password">Confirm Password</label>
+                <label for="confirm_password">Potvrdenie hesla</label>
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
 
@@ -177,20 +181,20 @@ if(isset($_POST['teacherRegister'])){
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
-        <script type="text/javascript">
-        $(function () {
-            $("#toggle_pwd").click(function () {
-                $(this).toggleClass("fa-eye fa-eye-slash");
-               var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
-                $("#password").attr("type", type);
-            });
+<script type="text/javascript">
+    $(function () {
+        $("#toggle_pwd").click(function () {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+            $("#password").attr("type", type);
         });
-        $(function () {
-            $("#toggle_cpwd").click(function () {
-                $(this).toggleClass("fa-eye fa-eye-slash");
-               var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
-                $("#confirm_password").attr("type", type);
-            });
+    });
+    $(function () {
+        $("#toggle_cpwd").click(function () {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
+            $("#confirm_password").attr("type", type);
         });
-    </script>
-        </html>
+    });
+</script>
+</html>
