@@ -194,10 +194,22 @@ $results = $controller->getSubmissionResults($submissionId);
         </div>
 
         <script>
+            function UrlExists(url)  {
+                var http = new XMLHttpRequest();
+                http.open('HEAD', url, false);
+                http.send();
+                return http.status !== 404;
+            }
+
             function toggleModal(url) {
                 $("#modal").modal('show');
                 //$("#modalLabel").html("Obrázok");
-                $(".modal-body").html("<img src='../" + url + "' alt='Obrázok'>");
+
+                if(UrlExists("../"+url)) {
+                    $(".modal-body").html("<img src='../" + url + "' alt='Obrázok'>");
+                } else {
+                    $(".modal-body").html("Obrázok nebol dodaný.");
+                }
             }
         </script>
         <hr class="border">

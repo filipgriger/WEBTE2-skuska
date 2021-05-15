@@ -8,6 +8,7 @@ $(document).ready(function () {
                     height: 400,
                     id: 'canvas'+i
                 });
+
                 var cx = canvas.getContext('2d');
                 var toolbar = elt('div', {
                     class: 'toolbar'
@@ -253,6 +254,48 @@ $(document).ready(function () {
             }
 
             createPaint(document.querySelector('#paint-app' + i));
+
+            var canvas = document.querySelector("#canvas"+i);
+            var ctx = canvas.getContext('2d');
+
+            function getTouchPos(e, element) {
+                var rect = element.getBoundingClientRect();
+                return {
+                    x: Math.floor(e.touches[0].clientX - rect.left),
+                    y: Math.floor(e.touches[0].clientY - rect.top)
+                };
+            }
+
+            canvas.addEventListener('touchstart', function(e) {
+                pos = getTouchPos(e, canvas);
+                this.down = true;
+                this.X = pos.x;
+                this.Y = pos.y;
+            });
+
+            canvas.addEventListener('touchend', function() {
+                this.down = false;
+            });
+
+            canvas.addEventListener('touchmove', function(e) {
+                if(this.down) {
+                    pos = getTouchPos(e, canvas);
+                    with(ctx) {
+                        if($("#select"+i+" option:selected").val() == "Erase") {
+                            ctx.globalCompositeOperation = 'destination-out';
+                            tools.Line(e, ctx, function () {
+                                ctx.globalCompositeOperation = 'source-over';
+                            });
+                        }
+                        beginPath();
+                        moveTo(this.X, this.Y);
+                        lineTo(pos.x, pos.y);
+                        stroke();
+                    }
+                    this.X = pos.x;
+                    this.Y = pos.y;
+                }
+            });
 
             function saveImage(image, id) {
                 //console.log(image)
