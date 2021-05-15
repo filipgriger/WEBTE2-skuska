@@ -60,9 +60,11 @@ $results = $controller->getSubmissionResults($submissionId);
     <?php foreach ($results['simple'] as $simpleQuestion):
         $background = '';
         if($simpleQuestion['points'] == $simpleQuestion['max_points']) {
-            $background = 'style="background: #28a74540"';
-        } else {
+            $background = 'style="background: #28a74580"';
+        } else if($simpleQuestion['points'] == 0) {
             $background = 'style="background: #dc354540"';
+        } else {
+            $background = 'style="background: #28a74520"';
         }
         ?>
 
@@ -87,9 +89,11 @@ $results = $controller->getSubmissionResults($submissionId);
     <?php foreach ($results['option'] as $optionQuestion):
         $background = '';
         if($optionQuestion['points'] == $optionQuestion['max_points']) {
-            $background = 'style="background: #28a74540"';
-        } else {
+            $background = 'style="background: #28a74580"';
+        } else if($optionQuestion['points'] == 0) {
             $background = 'style="background: #dc354540"';
+        } else {
+            $background = 'style="background: #28a74520"';
         }
         ?>
 
@@ -126,9 +130,11 @@ $results = $controller->getSubmissionResults($submissionId);
             <?php foreach (json_decode($pairQuestion['pairs'], true) as $pair):
                 $background = '';
                 if($pair['points'] == $pair['max_points']) {
-                    $background = 'style="background: #28a74540"';
-                } else {
+                    $background = 'style="background: #28a74580"';
+                } else if($pair['points'] == 0) {
                     $background = 'style="background: #dc354540"';
+                } else {
+                    $background = 'style="background: #28a74520"';
                 }
                 ?>
                 <tr <?php echo $background;?>>
@@ -148,6 +154,12 @@ $results = $controller->getSubmissionResults($submissionId);
         if(!$imageQuestion['points']) {
             $text = '<span style="color: #dc3545;">(Učiteľ zatiaľ nevyhodnotil otázku)</span>';
             $background = 'style="background: #FFFF0040"';
+        } else if($imageQuestion['points'] == $imageQuestion['max_points']) {
+            $background = 'style="background: #28a74580"';
+        } else if($imageQuestion['points'] == 0) {
+            $background = 'style="background: #dc354540"';
+        } else {
+            $background = 'style="background: #28a74520"';
         }
         ?>
 
@@ -197,6 +209,12 @@ $results = $controller->getSubmissionResults($submissionId);
         if(!$expressionQuestion['points']) {
             $text = '<span style="color: #dc3545;">(Učiteľ zatiaľ nevyhodnotil otázku)</span>';
             $background = 'style="background: #FFFF0040"';
+        } else if($expressionQuestion['points'] == $expressionQuestion['max_points']) {
+            $background = 'style="background: #28a74580"';
+        } else if($expressionQuestion['points'] == 0) {
+            $background = 'style="background: #dc354540"';
+        } else {
+            $background = 'style="background: #28a74520"';
         }
         ?>
         
