@@ -1,5 +1,6 @@
-$(document).ready( function () {
+$(document).ready(function () {
     $('#submissions-table').DataTable({
+        responsive: true,
         "language": {
             "zeroRecords": "Tabuľka neobsahuje žiadny záznam.",
             "info": "Zobrazuje sa _START_. až _END_. z _TOTAL_ záznamov.",
@@ -13,4 +14,4 @@ $(document).ready( function () {
             }
         },
     });
-} );
+});

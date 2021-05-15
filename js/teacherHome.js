@@ -1,11 +1,11 @@
 $(function () {
 
     $('.activate-test,.deactivate-test').click(function () {
-       updateTestStatus($(this).attr('data-test-id'), $(this).attr('data-status'), this);
+        updateTestStatus($(this).attr('data-test-id'), $(this).attr('data-status'), this);
     });
 
 
-    function updateTestStatus(testId, newStatus, element){
+    function updateTestStatus(testId, newStatus, element) {
         $.ajax({
             url: '../router.php',
             method: 'post',
@@ -20,9 +20,9 @@ $(function () {
         })
     }
 
-    function updateContent (button, response){
+    function updateContent(button, response) {
         let icon = $(button).parent().prev().children().first();
-        if (parseInt(response)){
+        if (parseInt(response)) {
             $(button).addClass('deactivate-test').removeClass('activate-test').removeClass('btn-success').addClass('btn-danger');
             $(button).text('Deactivate');
             $(button).attr('data-status', '0');

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== 'teacher'){
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== 'teacher') {
     header("Location: ../index.php");
     exit();
 }
@@ -11,20 +11,20 @@ $controller = new TestController();
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vytvorenie testu</title>
-    <script
-        src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-        crossorigin="anonymous"></script>
-    <script src="../js/createTest.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="../js/createTest.js"></script>
 </head>
 <body>
 <div class="container py-5">
@@ -34,13 +34,16 @@ $controller = new TestController();
             <div class="col">
                 <div class="form-group">
                     <label for="test-code">Kľúč</label>
-                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx" pattern="[0-9A-Za-z]{6}" value="<?php echo $controller->generateRandomHash();?>" readonly="readonly" style="color: #787878; cursor: no-drop">
+                    <input type="text" class="form-control" id="test-code" name="test-code" placeholder="xxxxxx"
+                           pattern="[0-9A-Za-z]{6}" value="<?php echo $controller->generateRandomHash(); ?>"
+                           readonly="readonly" style="color: #787878; cursor: no-drop">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <label for="test-time">Časový limit (v minútach)</label>
-                    <input type="number" class="form-control" id="test-time" name="test-time" min="1" placeholder="00:00" required>
+                    <input type="number" class="form-control" id="test-time" name="test-time" min="1"
+                           placeholder="00:00" required>
                 </div>
             </div>
         </div>

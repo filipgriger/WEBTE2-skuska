@@ -22,7 +22,8 @@ class SubmissionController
         return $this->connection;
     }
 
-    public function createSubmission($testId, $studentId){
+    public function createSubmission($testId, $studentId)
+    {
         $stmt = $this->getConnection()->prepare('insert into submissions (student_id, test_id) value (?, ?)');
         $stmt->bind_param('ii', $studentId, $testId);
         $stmt->execute();
@@ -31,15 +32,17 @@ class SubmissionController
         return $this->getConnection()->insert_id;
     }
 
-    public function evaluateSubmission($submissionId){
+    public function evaluateSubmission($submissionId)
+    {
         $answers = $this->getSubmissionQuestions($submissionId);
-        foreach ($answers as $answer){
+        foreach ($answers as $answer) {
             $this->evaluateAnswer($answer);
         }
         $this->updateSubmissionPoints($submissionId);
     }
 
-    public function getSubmissionQuestions($submissionId){
+    public function getSubmissionQuestions($submissionId)
+    {
         $q = 'SELECT
             answers.id as answer_id,
             questions.id as question_id,
@@ -57,16 +60,17 @@ class SubmissionController
         $res = $stmt->get_result();
         $questions = [];
 
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($questions, $a);
         }
         return $questions;
     }
 
-    public function evaluateAnswer($answer) {
+    public function evaluateAnswer($answer)
+    {
         $q = '';
         $points = 0.0;
-        switch ($answer['type']){
+        switch ($answer['type']) {
             case 'simple':
                 $q = 'SELECT 
                             qs.answer AS correct_answer,
@@ -124,7 +128,7 @@ class SubmissionController
 //                break;
         }
 
-        if ($answer['type'] !== 'image' && $answer['type'] !== 'expression' ) {
+        if ($answer['type'] !== 'image' && $answer['type'] !== 'expression') {
             $stmt = $this->getConnection()->prepare($q);
             $stmt->bind_param('ii', $answer['question_id'], $answer['answer_id']);
             $stmt->execute();
@@ -161,28 +165,32 @@ class SubmissionController
         return $points;
     }
 
-    public function updatePoints($answerId, $points){
+    public function updatePoints($answerId, $points)
+    {
         $stmt = $this->getConnection()->prepare('update answers set points = ? where id = ?');
         $stmt->bind_param('ii', $points, $answerId);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function updatePairFractionalPoints($answerPairId, $pointFraction){
+    public function updatePairFractionalPoints($answerPairId, $pointFraction)
+    {
         $stmt = $this->getConnection()->prepare('update answers_pair set partial_points = ? where id = ?');
         $stmt->bind_param('di', $pointFraction, $answerPairId);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function updateSubmissionPoints($submissionId){
+    public function updateSubmissionPoints($submissionId)
+    {
         $stmt = $this->getConnection()->prepare('update submissions set total_points = (select sum(points) from answers where submission_id = ? ) WHERE submissions.id = ?;');
         $stmt->bind_param('ii', $submissionId, $submissionId);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function getSubmissionResults($submissionId){
+    public function getSubmissionResults($submissionId)
+    {
 
         $qSimple = 'SELECT
                         questions.question,
@@ -288,7 +296,7 @@ class SubmissionController
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
         $res = $stmt->get_result();
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($questionResults['simple'], $a);
         }
         $stmt->close();
@@ -297,7 +305,7 @@ class SubmissionController
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
         $res = $stmt->get_result();
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($questionResults['option'], $a);
         }
         $stmt->close();
@@ -306,7 +314,7 @@ class SubmissionController
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
         $res = $stmt->get_result();
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($questionResults['pair'], $a);
         }
         $stmt->close();
@@ -315,7 +323,7 @@ class SubmissionController
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
         $res = $stmt->get_result();
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($questionResults['image'], $a);
         }
         $stmt->close();
@@ -324,7 +332,7 @@ class SubmissionController
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
         $res = $stmt->get_result();
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($questionResults['expression'], $a);
         }
         $stmt->close();
@@ -332,7 +340,8 @@ class SubmissionController
         return $questionResults;
     }
 
-    public function getTestSubmissions($testId){
+    public function getTestSubmissions($testId)
+    {
         $q = 'SELECT
                 submissions.id as submission_id, student_code, `name`, surname,
                 submissions.created_at AS submitted_at,
@@ -351,14 +360,15 @@ class SubmissionController
         $stmt->execute();
         $res = $stmt->get_result();
         $submissions = array();
-        while ($a = $res->fetch_assoc()){
+        while ($a = $res->fetch_assoc()) {
             array_push($submissions, $a);
         }
         $stmt->close();
         return $submissions;
     }
 
-    public function getSubmissionByTestAndUser($testId, $studentId){
+    public function getSubmissionByTestAndUser($testId, $studentId)
+    {
         $stmt = $this->getConnection()->prepare('select * from submissions where test_id = ? and student_id = ?');
         $stmt->bind_param('ii', $testId, $studentId);
         $stmt->execute();
@@ -366,7 +376,8 @@ class SubmissionController
         return $submission;
     }
 
-    public function getSubmission($submissionId){
+    public function getSubmission($submissionId)
+    {
         $stmt = $this->getConnection()->prepare('select * from submissions where id = ?');
         $stmt->bind_param('i', $submissionId);
         $stmt->execute();
@@ -374,7 +385,8 @@ class SubmissionController
         return $submission;
     }
 
-    public function editSubmission($submissionId, $modifications){
+    public function editSubmission($submissionId, $modifications)
+    {
         foreach ($modifications['notPair'] as $answerId => $points) {
             $this->editAnswerPoints($answerId, $points);
         }
@@ -386,14 +398,16 @@ class SubmissionController
         $this->updateSubmissionPoints($submissionId);
     }
 
-    public function editAnswerPoints($answerId, $points){
+    public function editAnswerPoints($answerId, $points)
+    {
         $stmt = $this->getConnection()->prepare('update answers set points = ? where id = ?');
         $stmt->bind_param('di', $points, $answerId);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function editPairAnswerPoints($answerId, $answerPairId, $points){
+    public function editPairAnswerPoints($answerId, $answerPairId, $points)
+    {
         $stmt = $this->getConnection()->prepare('update answers_pair set partial_points = ? where id = ?');
         $stmt->bind_param('di', $points, $answerPairId);
         $stmt->execute();
@@ -404,7 +418,8 @@ class SubmissionController
         $stmt->close();
     }
 
-    public function updateStatusTestSubmitted($studentId, $testId) {
+    public function updateStatusTestSubmitted($studentId, $testId)
+    {
         $stmt = $this->getConnection()->prepare('update students_status set submitted = 1 where student_id = ? and test_id = ?');
         $stmt->bind_param('ii', $studentId, $testId);
         $stmt->execute();

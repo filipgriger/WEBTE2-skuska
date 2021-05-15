@@ -22,11 +22,12 @@ class TestController
         return $this->connection;
     }
 
-    public function createTest($teacherId, $code,$time, $questions){
+    public function createTest($teacherId, $code, $time, $questions)
+    {
         if (count($questions) > 0) {
 
             $stmt = $this->getConnection()->prepare('insert into tests (code, teacher_id,time, total_points) value (?, ?, ?, 0)');
-            $stmt->bind_param('sii', $code, $teacherId,$time);
+            $stmt->bind_param('sii', $code, $teacherId, $time);
             $stmt->execute();
             $stmt->close();
             $testId = $this->getConnection()->insert_id;
@@ -234,7 +235,8 @@ class TestController
         }
     }
 
-    public function getTest($testId){
+    public function getTest($testId)
+    {
         $stmt = $this->getConnection()->prepare('select * from tests where id = ?');
         $stmt->bind_param('s', $testId);
         $stmt->execute();
@@ -348,7 +350,8 @@ class TestController
         return $newStatus;
     }
 
-    public function createStudentStatus($studentId, $testCode) {
+    public function createStudentStatus($studentId, $testCode)
+    {
         $stmt = $this->getConnection()->prepare('insert ignore into students_status (student_id, test_id, status) value (?, ?, 1)');
         $testId = $this->getTestByCode($testCode);
         $stmt->bind_param('ii', $studentId, $testId["id"]);
@@ -356,15 +359,17 @@ class TestController
         $stmt->close();
     }
 
-    public function changeStudentStatus($studentId, $testCode, $status) {
+    public function changeStudentStatus($studentId, $testCode, $status)
+    {
         $stmt = $this->getConnection()->prepare('update students_status set status = (?) where student_id = ? and test_id = ?');
         $testId = $this->getTestByCode($testCode);
-        $stmt->bind_param('iii',$status, $studentId, $testId["id"]);
+        $stmt->bind_param('iii', $status, $studentId, $testId["id"]);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function studentStatusChanged($testId) {
+    public function studentStatusChanged($testId)
+    {
         $q = 'SELECT
                 CONCAT(name, " ", surname) AS `name`,
                 students.student_code,
@@ -389,7 +394,7 @@ class TestController
         $not_submitted = array();
 
         while ($a = $res->fetch_assoc()) {
-            if($a["submitted"] == 0) {
+            if ($a["submitted"] == 0) {
                 array_push($not_submitted, $a);
             } else {
                 array_push($submitted, $a);
@@ -401,7 +406,8 @@ class TestController
         return $status ?? null;
     }
 
-    public function generateRandomHash($length = 6) {
+    public function generateRandomHash($length = 6)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -410,11 +416,11 @@ class TestController
         }
 
         $stmt = $this->getConnection()->prepare("SELECT * from tests WHERE code = ?");
-        $stmt->bind_param('s',$randomString);
+        $stmt->bind_param('s', $randomString);
         $stmt->execute();
         $stmt->store_result();
 
-        if($stmt->num_rows >= 1) {
+        if ($stmt->num_rows >= 1) {
             return $this->generateRandomHash();
         } else {
             return $randomString;

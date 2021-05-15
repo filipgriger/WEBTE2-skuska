@@ -5,16 +5,16 @@ include_once 'TestController.php';
 include_once 'SubmissionController.php';
 include_once 'config.php';
 
-if ($_SESSION['role'] == 'student'){
+if ($_SESSION['role'] == 'student') {
     $studentId = $_SESSION['studentId'];
-} elseif ($_SESSION['role'] == 'teacher'){
+} elseif ($_SESSION['role'] == 'teacher') {
     $teacherId = $_SESSION['teacherId'];
 }
 
-if (isset($_POST)){
-    switch ($_POST['route']){
+if (isset($_POST)) {
+    switch ($_POST['route']) {
         case 'createTest':
-            (new TestController())->createTest($teacherId, $_POST['test-code'],$_POST['test-time'], $_POST['questions']);
+            (new TestController())->createTest($teacherId, $_POST['test-code'], $_POST['test-time'], $_POST['questions']);
             header('Location: teacher/teacherHome.php');
             exit();
         case 'saveAnswers':
@@ -37,11 +37,9 @@ if (isset($_POST)){
             echo $newStatus;
             break;
         case 'editSubmission':
-//            var_dump($_POST['modifications']);
-//            die();
             $submissionController = new SubmissionController();
             $submissionController->editSubmission($_POST['submissionId'], $_POST['modifications']);
-            header('Location: teacher/showTestSubmissions.php?testId='.$_POST['testId']);
+            header('Location: teacher/showTestSubmissions.php?testId=' . $_POST['testId']);
             break;
     }
 }

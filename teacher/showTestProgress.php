@@ -1,8 +1,6 @@
 <?php
-// Initialize the session
 session_start();
 
-// Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== 'teacher') {
     header("Location: ../index.php");
     exit();
@@ -19,19 +17,20 @@ if (!($test = $testController->getTest($_GET['testId']))) {
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Priebeh testu <?= $test['code'] ?></title>
-    <script
-        src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/showResults.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <script>
         $(function () {
             var testId = "<?php echo $_GET['testId']; ?>";
@@ -48,9 +47,9 @@ if (!($test = $testController->getTest($_GET['testId']))) {
 
                 $.each(data.not_submitted, function (index, item) {
                     let row = '<tr>' +
-                    '<td>' + item.name + '</td>' +
-                    '<td>' + item.student_code + '</td>' +
-                    '<td>' + (item.status ? 'Píše' : '<span class="text-danger font-weight-bold">V inom okne</span>') + '</td>' +
+                        '<td>' + item.name + '</td>' +
+                        '<td>' + item.student_code + '</td>' +
+                        '<td>' + (item.status ? 'Píše' : '<span class="text-danger font-weight-bold">V inom okne</span>') + '</td>' +
                         '</tr>';
                     inProgress.append($(row));
                 });
@@ -76,36 +75,39 @@ if (!($test = $testController->getTest($_GET['testId']))) {
     </div>
 
 
-
     <hr class="border">
 
     <div class="row">
         <div class="col-6 border-right">
             <div class="h2">Test píšu</div>
-            <table class="table text-center">
-                <thead>
-                <tr>
-                    <th class="w-33">Meno</th>
-                    <th class="w-33">ID študenta</th>
-                    <th class="w-33">Stav</th>
-                </tr>
-                </thead>
-                <tbody id="in-progress"></tbody>
-            </table>
+            <div class="table-overflow">
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th class="w-33">Meno</th>
+                        <th class="w-33">ID študenta</th>
+                        <th class="w-33">Stav</th>
+                    </tr>
+                    </thead>
+                    <tbody id="in-progress"></tbody>
+                </table>
+            </div>
         </div>
         <div class="col-6">
             <div class="h2">Test odovzdali</div>
-            <table class="table text-center">
-                <thead>
-                <tr>
-                    <th>Meno</th>
-                    <th>ID študenta</th>
-                    <th>Odovzdané</th>
-                    <th>Akcia</th>
-                </tr>
-                </thead>
-                <tbody id="finished"></tbody>
-            </table>
+            <div class="table-overflow">
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th>Meno</th>
+                        <th>ID študenta</th>
+                        <th>Odovzdané</th>
+                        <th>Akcia</th>
+                    </tr>
+                    </thead>
+                    <tbody id="finished"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 

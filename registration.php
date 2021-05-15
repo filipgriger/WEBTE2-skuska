@@ -1,30 +1,22 @@
 <?php
-// Include config file
 require_once "config.php";
 require_once "pdo.php";
 
-// Define variables and initialize with empty values
 $email = $password = "";
 $email_err = $password_err = "";
 
-// Processing form data when form is submitted
 if (isset($_POST['teacherRegister'])) {
 
-    // Validate username
     if (empty(trim($_POST["email"]))) {
         $email_err = "Prosím zadaj tvoj e-mail.";
     } else {
-        // Prepare a select statement
         $sql = "SELECT id FROM teachers WHERE email = :email";
 
         if ($stmt = $pdo->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":email", $param_email, PDO::PARAM_STR);
 
-            // Set parameters
             $param_email = trim($_POST["email"]);
 
-            // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 if ($stmt->rowCount() == 1) {
                     $email_err = "Užívateľ v databáze už existuje.";
@@ -35,7 +27,6 @@ if (isset($_POST['teacherRegister'])) {
                 echo "Nastala neočakávaná chyba.";
             }
 
-            // Close statement
             unset($stmt);
         }
     }
@@ -49,7 +40,6 @@ if (isset($_POST['teacherRegister'])) {
         $password = trim($_POST["password"]);
     }
 
-    // Validate confirm password
     if (empty(trim($_POST["confirm_password"]))) {
         $confirm_password_err = "Prosím potvrď heslo.";
     } else {
@@ -60,10 +50,8 @@ if (isset($_POST['teacherRegister'])) {
     }
 
 
-    // Check input errors before inserting in database
     if (empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
 
-        // Prepare an insert statement
         $sql = "INSERT INTO teachers(name,surname,email,password) VALUES (:name,:surname,:email,:password)";
 
         if ($stmt = $pdo->prepare($sql)) {
@@ -71,31 +59,23 @@ if (isset($_POST['teacherRegister'])) {
             $param_name = trim($_POST["name"]);
             $param_surname = trim($_POST["surname"]);
             $param_email = trim($_POST["email"]);
-            // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":name", $param_name, PDO::PARAM_STR);
             $stmt->bindParam(":surname", $param_surname, PDO::PARAM_STR);
             $stmt->bindParam(":email", $param_email, PDO::PARAM_STR);
             $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
 
-            // Set parameters
-
-
-            // Attempt to execute the prepared statement
             if ($stmt->execute()) {
-                // Redirect to login page
                 echo '<span style="color:#00ff00;text-align:center;"><b>Úspešne ste sa zaregistrovali!</b></span>';
             } else {
                 echo "Nastala neočakávaná chyba.";
             }
 
-            // Close statement
             unset($stmt);
         }
     } else {
         echo '<span style="color:#FF0000;text-align:center;"><b>Chyba pri registrácii!</b></span>';
     }
 
-    // Close connection
     unset($pdo);
 }
 ?>
@@ -106,14 +86,12 @@ if (isset($_POST['teacherRegister'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registrácia</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet" type="text/css"/>
     <link href="css/loginForm.css" rel="stylesheet">
     <style type="text/css">
-
         #toggle_pwd, #toggle_cpwd {
             cursor: pointer;
         }
@@ -135,18 +113,24 @@ if (isset($_POST['teacherRegister'])) {
 
         <form id="teacherRegister" action="registration.php" method="post" class="mb-1">
             <div class="form-floating">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['name']) echo $_POST['name'];?>" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                       value="<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['name']) echo $_POST['name']; ?>"
+                       required>
                 <label for="name">Meno</label>
             </div>
 
             <div class="form-floating">
-                <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname" value="<?php if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['surname']) echo $_POST['surname'];?>" required>
+                <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname"
+                       value="<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['surname']) echo $_POST['surname']; ?>"
+                       required>
                 <label for="surname">Priezvisko</label>
             </div>
 
             <div class="form-floating">
                 <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="email"
-                       name="email" placeholder="email@example.com" value="<?php if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['email']) echo $_POST['email'];?>" required>
+                       name="email" placeholder="email@example.com"
+                       value="<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['email']) echo $_POST['email']; ?>"
+                       required>
                 <label for="email">E-mail</label>
             </div>
 

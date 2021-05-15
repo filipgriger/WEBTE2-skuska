@@ -1,0 +1,17 @@
+.table-overflow {
+    overflow-x: auto;
+}
+
+.table-action {
+    display: flex;
+    margin: 0 -2px;
+    justify-content: center;
+}
+
+.table-action-child {
+    padding: 0 2px;
+}
+
+.table-action-child-inline {
+    display: inline-block;
+}

@@ -6,7 +6,7 @@ $(document).ready(function () {
                 var canvas = elt('canvas', {
                     width: 600,
                     height: 400,
-                    id: 'canvas'+i
+                    id: 'canvas' + i
                 });
 
                 var cx = canvas.getContext('2d');
@@ -66,20 +66,19 @@ $(document).ready(function () {
                 addEventListener('mouseup', end);
             }
 
-            // loads an image from a URL and replaces the contents of the canvas
             function loadImageURL(cx, url) {
-              var image = document.createElement('img');
-              image.addEventListener('load', function() {
-                var color = cx.fillStyle,
-                  size = cx.lineWidth;
-                cx.canvas.width = image.width;
-                cx.canvas.height = image.height;
-                cx.drawImage(image, 0, 0);
-                cx.fillStyle = color;
-                cx.strokeStyle = color;
-                cx.lineWidth = size;
-              });
-              image.src = url;
+                var image = document.createElement('img');
+                image.addEventListener('load', function () {
+                    var color = cx.fillStyle,
+                        size = cx.lineWidth;
+                    cx.canvas.width = image.width;
+                    cx.canvas.height = image.height;
+                    cx.drawImage(image, 0, 0);
+                    cx.fillStyle = color;
+                    cx.strokeStyle = color;
+                    cx.lineWidth = size;
+                });
+                image.src = url;
             }
 
             var controls = Object.create(null);
@@ -143,11 +142,6 @@ $(document).ready(function () {
             };
 
             controls.save = function (cx) {
-                /*var link = elt('a', {
-                  rel: '#',
-                  target: '_self'
-                }, 'Save');*/
-
                 var link = elt('a', {
                     rel: '#',
                     target: '_self'
@@ -156,7 +150,6 @@ $(document).ready(function () {
                 function update() {
                     try {
                         link.rel = cx.canvas.toDataURL();
-                        //saveButton.onclick = function() { saveImage(cx.canvas.toDataURL()); };
                     } catch (e) {
                         if (e instanceof SecurityError) {
                             link.rel = 'javascript:alert(' +
@@ -184,39 +177,6 @@ $(document).ready(function () {
                 return link;
             };
 
-            // open a file
-            /*controls.openFile = function(cx) {
-              var input = elt('input', {
-                type: 'file'
-              });
-              input.addEventListener('change', function() {
-                if (input.files.length == 0) return;
-                var reader = new FileReader();
-                reader.addEventListener('load', function() {
-                  loadImageURL(cx, reader.result);
-                });
-                reader.readAsDataURL(input.files[0]);
-              });
-              return elt('div', null, 'Open file: ', input);
-            };*/
-
-            // open a URL
-            /*controls.openURL = function(cx) {
-              var input = elt('input', {
-                type: 'text'
-              });
-              var form = elt('form', null, 'Open URL: ', input,
-                elt('button', {
-                  type: 'submit'
-                }, 'load'));
-              form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                loadImageURL(cx, form.querySelector('input').value);
-              });
-              return form;
-            };*/
-
-            // drawing tools
             var tools = Object.create(null);
 
             tools.Line = function (event, cx, onEnd) {
@@ -255,7 +215,7 @@ $(document).ready(function () {
 
             createPaint(document.querySelector('#paint-app' + i));
 
-            var canvas = document.querySelector("#canvas"+i);
+            var canvas = document.querySelector("#canvas" + i);
             var ctx = canvas.getContext('2d');
 
             function getTouchPos(e, element) {
@@ -266,22 +226,22 @@ $(document).ready(function () {
                 };
             }
 
-            canvas.addEventListener('touchstart', function(e) {
+            canvas.addEventListener('touchstart', function (e) {
                 pos = getTouchPos(e, canvas);
                 this.down = true;
                 this.X = pos.x;
                 this.Y = pos.y;
             });
 
-            canvas.addEventListener('touchend', function() {
+            canvas.addEventListener('touchend', function () {
                 this.down = false;
             });
 
-            canvas.addEventListener('touchmove', function(e) {
-                if(this.down) {
+            canvas.addEventListener('touchmove', function (e) {
+                if (this.down) {
                     pos = getTouchPos(e, canvas);
-                    with(ctx) {
-                        if($("#select"+i+" option:selected").val() == "Erase") {
+                    with (ctx) {
+                        if ($("#select" + i + " option:selected").val() == "Erase") {
                             ctx.globalCompositeOperation = 'destination-out';
                             tools.Line(e, ctx, function () {
                                 ctx.globalCompositeOperation = 'source-over';
@@ -319,8 +279,8 @@ $(document).ready(function () {
                         image: image, id: id
                     },
                     success: function (data) {
-                        if(data) {
-                            loadImageURL(document.querySelector("#canvas"+i).getContext('2d'), data);
+                        if (data) {
+                            loadImageURL(document.querySelector("#canvas" + i).getContext('2d'), data);
                         }
                     }
                 });

@@ -8,8 +8,8 @@ $controller = new TestController();
 
 $index = 0;
 
-while(true) {
-    if($controller->studentStatusChanged($_GET["testId"])) {
+while (true) {
+    if ($controller->studentStatusChanged($_GET["testId"])) {
         sendSSE(++$index, json_encode($controller->studentStatusChanged($_GET["testId"])));
     } else {
         sendSSE(++$index, null);
@@ -17,7 +17,8 @@ while(true) {
     sleep(2);
 }
 
-function sendSSE($id, $msg) {
+function sendSSE($id, $msg)
+{
     echo "id: $id\n";
     echo "event: evt\n";
     echo "data: $msg\n\n";
@@ -25,4 +26,5 @@ function sendSSE($id, $msg) {
     ob_flush();
     flush();
 }
+
 ?>

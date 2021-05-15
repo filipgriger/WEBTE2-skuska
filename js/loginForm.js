@@ -3,16 +3,16 @@ $(document).ready(function () {
     $('#studentButton').click(toggleSignUp);
 })
 
-function toggleSignUp(e){
+function toggleSignUp(e) {
     e.preventDefault();
-    $('#teacherForm').toggle(); // display:block or none
-    $('#studentForm').toggle(); // display:block or none
+    $('#teacherForm').toggle();
+    $('#studentForm').toggle();
 
-    if($('#studentButton').hasClass( "active" )){
-        $('#studentButton').removeClass( "active" );
+    if ($('#studentButton').hasClass("active")) {
+        $('#studentButton').removeClass("active");
         $('#teacherButton').addClass("active");
-    }else{
+    } else {
         $('#studentButton').addClass("active");
-        $('#teacherButton').removeClass( "active" );
+        $('#teacherButton').removeClass("active");
     }
 }
