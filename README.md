@@ -55,3 +55,5 @@
 - export do pdf (Miso)
 
 - export do csv (Adam)
+
+- optimalizacia pre tablet, ovladanie dotykom (Adam)
