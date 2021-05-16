@@ -59,7 +59,11 @@ if (isset($_GET["testId"])) {
             $answer = $testController->getAnswerByStudentAndSub($submission['submission_id'], $question['id'], $question['type']);
             if ($question['type'] == "image") {
                 $output .= '<h4>Student answered:</h4><br><br><img src="../' . $answer . '" alt="Mountain" style="max-height: 202px; max-width: 402px;"><br><br>';
-            } else {
+            } 
+            else if ($question['type'] == "expression"){
+                $output .= '<h4>Nesplnená funkcionalita pre matematický výraz</h4><br><br><p></p><br><br>';
+            }
+            else {
                 $output .= '<h4>Student answered:</h4><br><br><p>' . $answer . '</p><br><br>';
             }
 

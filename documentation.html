@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="utf-8">
+    <title>Technicka_dokumentacia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/documentation.css">
+
+
+</head>
+
+<body>
+    <div class="container-md">
+
+        <div class="header">
+            <h1 class="h3 mb-3 fw-normal">Technická dokumentácia</h1>
+            
+            <hr>
+        </div>
+
+        <div class="telo">
+
+            <h2>Predstavenie</h2>
+            <hr>
+            <p>Dobrý deň.<br>
+                Toto je technická dokumentácia k záverečnému zadaniu z predmetu WEBTECH2. <br>
+                Sme štvorčlenný tím ktorý sa skladá zo študentov:
+            </p>
+            <ul style="background-color: #6495ED;" class="list-group">
+                <li class="list-group-item list-group-item-primary">
+                    <img src="https://is.stuba.sk/auth/lide/foto.pl?id=82051;lang=sk" class="img-thumbnail"
+                        alt="Filip Griger">
+                    Filip Griger, AIS ID: 82051
+                </li>
+                <li class="list-group-item list-group-item-primary">
+                    <img src="https://is.stuba.sk/auth/lide/foto.pl?id=97787;lang=sk" class="img-thumbnail"
+                        alt="Michal Grznár">
+                    Michal Grznár, AIS ID: 97787
+                </li>
+                <li class="list-group-item list-group-item-primary">
+                    <img src="https://is.stuba.sk/auth/lide/foto.pl?id=97555;lang=sk" class="img-thumbnail"
+                        alt="Jakub Prôčka">
+                    Jakub Prôčka, AIS ID: 97555
+                </li>
+                <li class="list-group-item list-group-item-primary">
+                    <img src="https://is.stuba.sk/auth/lide/foto.pl?id=97923;lang=sk" class="img-thumbnail"
+                        alt="Adam Ružička">
+                    Adam Ružička, AIS ID: 97923
+                </li>
+            </ul>
+            <br>
+
+            <h2>Inštalácia</h2>
+            <hr>
+            <p>Pre inštaláciu a správne fungovanie našeho riešenia je potrebné najprv spraviť nasledujúce kroky:</p>
+            <ul>
+                <li>Vytvoriť si databázu prostredníctvom najnovšieho DUMP SQL súboru.</li>
+                <li>Vytvoriť si a nastaviť config.php pričom príklad nastavenia je v súbore config-example.php .</li>
+                <li>Vytvoriť si adresár images v root priečinku a nastaviť jeho práva na 777.</li>
+                <li>Vytvoriť si adresár submissions v priečinku teacher a nastaviť jeho práva na 777.</li>
+            </ul>
+            <br>
+
+            <h2>Štruktúra databázy</h2>
+            <hr>
+            <p>Databáza je rozdelená nasledovne:</p>
+            <ul>
+                <li><b>Teachers:</b><br>
+                    Tabuľka kde sú uložené prihlasovacie údaje pre užívateľov typu Učiteľ pričom heslo je hashované.
+                </li>
+                <li><b>Students:</b><br>
+                    Tabuľka kde sú uložené prihlasovacie údaje študena spolu s jeho identifikačným číslom.
+                </li>
+                <li><b>Tests:</b><br>
+                    Tabuľka kde sú uložené jednotlivé testy pričom sú tu ich kódy, ID učiteľa ktorý vytvoril daný test,
+                    počet možných bodov ktoré je možné získať, či sú testy aktívne (ak nie sú tak študent do testu
+                    nedostane),
+                    kedy boli vytvorené testy a potom za koľko času je možné test dokončiť.
+                </li>
+                <li><b>Students_status:</b><br>
+                    Tabuľka kde je uložené ID študenta, ID testu a jeho status či je študent aktívny na danom teste a či
+                    ho úspešne odoslal.
+                </li>
+                <li><b>Submissions:</b><br>
+                    Tabuľka ktorá nám hovorí ktoré testy už boli odoslané ktorými študentami pričom je tu počet kolko
+                    bodov získali a kedy bol
+                    záznam vytvorený.
+                </li>
+                <li><b>Questions:</b><br>
+                    Tabuľka kde sú uložené jednotlivé otázky pre testy pričom každá otázka ma priradené ID testu ktorému
+                    prislúcha,
+                    typ otázky (enum) a počet bodov ktoré je možné získať za otázku.<br>
+                    Zároveň sú tu podtabulky typu questions kde sú uložené ID jednotlivých typov otázok a odpovede na
+                    dané otázky (okrem image a epression kde
+                    odpoved vyhodnocuje učiteľ).
+                </li>
+                <li><b>Options:</b><br>
+                    Tabuľka ktorá uchováva jednotlivé možnosti pre otázky typu options (pre výber správnej odpovede).
+                </li>
+                <li><b>Answers:</b><br>
+                    Tabuľka ktorá uchováva všetky odpovede od študentov pričom je pri nich priradené submissions ID, ID
+                    otázky ktorá prislúcha odpovedi a
+                    získané body za odpoveď.<br>
+                    Podtabulky typu answers uchovávajú odpovede na jednotlivé typy otázok.
+                </li>
+            </ul>
+            <br>
+
+            <h2>Predpripravené dáta v databáze</h2>
+            <hr>
+            <ul>
+                <li>Prihlasovacie dáta pre užívateľa Učiteľ:
+                    <ul>
+                        <li>Email: janko@hrasko.com</li>
+                        <li>Heslo: Heslo123.</li>
+                    </ul>
+                </li>
+                <br>
+                <li>Kódy predpripravených testov:
+                    <ul>
+                        <li>simple -> len otázky s otvorenou krátkou odpoveďou </li>
+                        <li>option -> len otázky s výberom správnej odpovede</li>
+                        <li>pairs1 -> len párovanie správnych odpovedí</li>
+                        <li>Image1 -> len otázky kde odpoveď vyžaduje nakreslenie obrázku</li>
+                        <li>expres -> len otázky kde odpoveď vyžaduje napísanie matematického výrazu</li>
+                        <li>compl1 -> kombinácia typov otázok</li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+
+            <h2>Popis funkcionality pre užívateľa typu Študent</h2>
+            <hr>
+            <h4>Prihlasovanie</h4>
+            <p>Aby sa študent mohol prihlásiť na daný test tak je potrebné aby najrpv zadal kód testu ktorý chce
+                spraviť,
+                meno, priezvisko a jeho identifikačné číslo. Po prihlásení sa zobrazia všetky otázky naraz a spustí sa
+                časovač.
+            </p>
+            <h4>Otázky</h4>
+            <p>V rámci otázok sme splnili všetky typy otázok ktoré boli určené v zadaní:</p>
+            <ul>
+                <li><b>Otázky s otvorenou krátkou odpoveďou:<br></b>
+                    Stačí napísať krátku odpoveď ktorá bude vyhodnotená rovno po ukonční testu pričom odpoveď je uložená
+                    v databáze.
+                </li>
+                <li><b>Otázky s výberom správnej odpovede:</b><br>
+                    Po kliknutí na otázku sa zobrazí okno na výber odpovede pričom správnosť odpovede je vyhodnotená
+                    rovno po dokončení testu.
+                </li>
+                <li><b>Otázky pre párovanie správnych odpovedí:</b><br>
+                    Na ľavej strane sa zobrazia otázky ktoré je potrebné vybrať z pravej strany správne. Správna odpoveď
+                    je na konci testu vyhodnotená.
+                </li>
+                <li><b>Otázky kde odpoveď vyžaduje nakreslenie obrázku:</b><br>
+                    Po kliknutí na tlačidlo "kresli" sa nám zobrazí modálne okno kde môžeme kresliť daný obrázok a aby
+                    sme mohli modálne okno opustiť
+                    je potrebné kliknúť uložiť a obrázok sa následne uloží do priečinku "images" na serveri. Ukladá sa
+                    do priečinku submissions kde sú
+                    obrázky rozdelené podla identifikačného čísla študenta.
+                </li>
+                <li><b>Otázky kde odpoveď vyžaduje napísanie matematického výrazu:</b><br>
+                    Je tu textový editor (ktorý je typu textarea) CKEDITOR ktorý má nainštalovaný plugin MathType pričom
+                    je potrebné kliknúť na znak odmocniny
+                    aby sa dali písať matematické výrazy. Po kliknití sa zobrazí dalšie okno kde sa dajú napísať aj
+                    nakresliť matematické výrazy.
+                </li>
+            </ul>
+
+            <h4>Odovzdanie</h4>
+            <p>Po odoslaní testu sa dostaneme na stránku ktorá nás oboznámi o úspešnom odovzdaní testu.<br>
+                Pre zobrazenie výsledok klikneme na tlačidlo "zobraziť výsledky". Zobrazí sa nám pekný prehľad kde je
+                otázka, naša odpoveď,
+                správna odpoveď, získané body a počet celkovo získaných bodov.Všetky otázky sú automaticky vyhodnoté
+                okrem
+                otázok kde je potrebné nakresliť obrázok a napísať matematický výraz kde musí učiteľ vyhodnotiť odpoveď
+                študenta (tak ako bolo v zadaní povedané).
+            </p>
+            <br>
+
+            <h2>Popis funkcionality pre užívateľa typu Študent</h2>
+            <hr>
+            <h4>Registrácia</h4>
+            <p>
+                Je tu možnosť registrácie kde je potrebné vyplniť každé políčko aby registrácia prebehla. Heslo musí byť
+                zadané dvakrát pričom je tu možnosť
+                si heslo zobraziť alebo ho nechať skryté.
+            </p>
+
+            <h4>Prihlasovanie</h4>
+            <p>
+                Prihlasovanie prebieha na základe e-mailu a hesla.
+            </p>
+
+            <h4>Testy</h4>
+            <p>
+                Po prihlásení sa nám zobrazí tabuľka jednotlivých testov pričom sa dajú testy dektivovať/aktivovať,
+                zobraziť tabuľku pre odovzdané testy,
+                zobraziť priebeh konkrétneho testu, exportovať do PDF a CSV formátu. <br>
+                Je tu možnosť aj vytvoriť test kde sa vygeneruje kľúč pre test a dá sa určiť časový limit a jednotlivé
+                otázky.
+            </p>
+
+            <h4>Odovzdané testy</h4>
+            <p>
+                Táto možnosť pri testoch nám poskytuje tabuľku ktorý študenti odovzdali daný test. Pokiaľ v testoch bola
+                otázka ktorú je potrebné obodovať učiteľom
+                tak je tu možnosť "upraviť hodnotenie" kde môžem upraviť hodnotenie všetkých otázok.
+            </p>
+
+            <h4>Priebeh testu</h4>
+            <p>
+                Možnosť "zobraziť priebieh" nám poskytuje náhľad kto práve pracuje na danom teste a kto už test
+                odovzdal.
+            </p>
+
+            <h4>Export PDF a CSV</h4>
+            <p>
+                Export pre PDF nám vytvorí PDF dokument pre daný test a pridá donho jednotlivých študentov, ich získané
+                body z testu, jednotlivé
+                otázky na teste a odpovede študentov na dané otázky. <br>
+                Export CSV nám stiahne csv súbor s danými údajmi.
+            </p>
+            <br>
+
+            <h2>Rozdelenie úloh:</h2>
+            <hr>
+            <ul>
+                <li>Login a registrácia -> Michal Grznár</li>
+                <li>Vytvorenie testu -> Filip Griger</li>
+                <li>Zobrazenie testu -> Filip Griger</li>
+                <li>Hodnotenie testu -> Filip Griger</li>
+                <li>Otázka s kratkymi odpovedami -> Filip Griger</li>
+                <li>Otázka s viacerymi odpovedami -> Filip Griger</li>
+                <li>Párovacie otázky -> Filip Griger</li>
+                <li>Otázka s kreslenim -> Adam Ružička</li>
+                <li>Otázka s matematickym vyrazom -> Jakub Prôčka</li>
+                <li>Možnosť odfotiť telefónom vypracované zadanie a poslať ho na stránku -> Jakub Prôčka</li>
+                <li>Ukončenie testu -> Filip Griger, Michal Grznár</li>
+                <li>Info pre učitela o zbiehani testov -> Filip Griger, Adam Ružička</li>
+                <li>Export do PDF -> Michal Grznár</li>
+                <li>Export do CSV -> Adam Ružička</li>
+                <li>Bonus -> Adam Ružička</li>
+            </ul>
+            <br>
+
+            <h2>Splnenie a nesplnenie požiadaviek:</h2>
+            <hr>
+            <h4>Splnené</h4>
+            <p>
+                Splnili sme každú požiadavku zadania okrem troch ktoré spomeniem nižšie.<br>
+                Splnili sme ale aj bonus kde je aplikácia optimalizovaná aby bežala aj na tablete.
+
+            </p>
+
+            <h4>Nesplnené</h4>
+            <p>
+                Nesplnená funkcionalita pri študentovi kde mala byť možnosť odfotiť telefónom vypracované zadanie a
+                poslať ho na stránku.<br>
+                Pri exporte PDF dokumentu nezobrazuje matematické výrazy.<br>
+                Neodovzdávame zadanie formou Docker balíčku.
+            </p>
+
+            <div class="col-6">
+                <a href="index.php" class="btn btn-dark float-right">Naspäť</a>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+
+</html>
