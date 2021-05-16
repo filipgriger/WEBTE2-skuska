@@ -74,12 +74,12 @@ $(function () {
             '<div class="col-9">' +
             '<div class="row">' +
             '<div class="col-6">' +
-            '<label class="font-weight-bold" for="q-simple' + simpleCount + '">Question <span class="question-number">' + (++questionCount) + '</span> [simple]</label>' +
+            '<label class="font-weight-bold" for="q-simple' + simpleCount + '">Otázka <span class="question-number">' + (++questionCount) + '</span> [s otvorenou krátkou odpoveďou]</label>' +
             '<input type="text" id="q-simple' + simpleCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
 
             '<div class="col-6">' +
-            '<label for="a-simple' + simpleCount + '">Correct answer</label>' +
+            '<label for="a-simple' + simpleCount + '">Správna odpoveď</label>' +
             '<input id="a-simple' + simpleCount + '" type="text" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][answer]">' +
             '</div>' +
             '</div>' +
@@ -87,7 +87,7 @@ $(function () {
 
 
             '<div class="col-2">' +
-            '<label for="points-simple' + simpleCount + '">Max points</label>' +
+            '<label for="points-simple' + simpleCount + '">Počet bodov</label>' +
             '<input id="points-simple' + simpleCount + '" type="number" min="1" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][points]">' +
             '</div>' +
 
@@ -107,21 +107,21 @@ $(function () {
             '<div class="col-9">' +
             '<div class="row">' +
             '<div class="col-6">' +
-            '<label class="font-weight-bold" for="q-option' + optionCount + '">Question <span class="question-number">' + (++questionCount) + '</span> [options]</label>' +
+            '<label class="font-weight-bold" for="q-option' + optionCount + '">Otázka <span class="question-number">' + (++questionCount) + '</span> [s výberom správnej odpovede]</label>' +
             '<input type="text" id="q-option' + optionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-6">' +
-            '<label for="a-option' + optionCount + '-' + ++optionOptionCount + '">Correct option</label>' +
+            '<label for="a-option' + optionCount + '-' + ++optionOptionCount + '">Správna možnosť</label>' +
             '<input type="text" id="a-option' + optionCount + '-' + ++optionOptionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][answer]">' +
             '</div>' +
             '</div>' +
             '</div>' +
             '<div class="col-2">' +
-            '<label for="points-option' + optionCount + '-' + ++optionOptionCount + '">Max points</label>' +
+            '<label for="points-option' + optionCount + '-' + ++optionOptionCount + '">Počet bodov</label>' +
             '<input type="number" min="1" id="points-option' + optionCount + '-' + ++optionOptionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][points]">' +
             '</div>' +
             '<div class="col-1 d-flex justify-content-center"><i class="align-self-end pb-1 fas fa-2x fa-times-circle delete-question btn text-danger"></i></div>' +
-            '<div class="col-12 mt-3 mb-2"><button class="btn btn-dark btn-block add-option-' + optionCount + '">Add option</button></div>' +
+            '<div class="col-12 mt-3 mb-2"><button class="btn btn-dark btn-block add-option-' + optionCount + '">Pridať možnosť</button></div>' +
             '</div>' + '<hr class="border">';
 
         controls.before($(question));
@@ -138,7 +138,7 @@ $(function () {
                 '<div class="col-10">' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend">' +
-                '<div class="input-group-text">Option <span class="pl-1 option-number">' + questionOptionCount + '</span></div>' +
+                '<div class="input-group-text">Možnosť <span class="pl-1 option-number">' + questionOptionCount + '</span></div>' +
                 '</div>' +
                 '<input type="text" class="form-control" name="questions[' + questionIndex + '][options][]">' +
                 '</div>' +
@@ -157,15 +157,15 @@ $(function () {
             '<div class="question form-group row" data-pair-count="0" data-index="' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount) + '][type]" value="pair">' +
             '<div class="col-9">' +
-            '<label class="font-weight-bold" for="q-pair' + pairCount + '">Question <span class="question-number">' + (++questionCount) + '</span> [pairs]</label>' +
+            '<label class="font-weight-bold" for="q-pair' + pairCount + '">Otázka <span class="question-number">' + (++questionCount) + '</span> [párovanie odpovedí]</label>' +
             '<input type="text" id="q-pair' + pairCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
-            '<label for="points-option' + optionCount + '-' + ++optionOptionCount + '">Max points</label>' +
+            '<label for="points-option' + optionCount + '-' + ++optionOptionCount + '">Počet bodov</label>' +
             '<input type="number" min="1" id="points-option' + optionCount + '-' + ++optionOptionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][points]">' +
             '</div>' +
             '<div class="col-1 d-flex justify-content-center"><i class="align-self-end pb-1 fas fa-2x fa-times-circle delete-question btn text-danger"></i></div>' +
-            '<div class="col-12 mt-3 mb-2"><button class="btn btn-dark btn-block add-pair-' + pairCount + '">Add pair</button></div>' +
+            '<div class="col-12 mt-3 mb-2"><button class="btn btn-dark btn-block add-pair-' + pairCount + '">Pridať pár</button></div>' +
             '</div>' + '<hr class="border">';
 
         controls.before($(question));
@@ -179,7 +179,7 @@ $(function () {
             let pair = '' +
                 '<div class="col-12">' +
                 '<div class="row my-2">' +
-                '<div class="col-12">Pair <span class="pair-number">' + questionPairCount + '</span></div>' +
+                '<div class="col-12">Pár <span class="pair-number">' + questionPairCount + '</span></div>' +
                 '<div class="col-5">' +
                 '<input type="text" class="form-control" name="questions[' + questionIndex + '][pairs][' + questionPairCount + '][left]">' +
                 '</div>' +
@@ -202,11 +202,11 @@ $(function () {
             '<div class="question form-group row">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][type]" value="image">' +
             '<div class="col-9">' +
-            '<label class="font-weight-bold" for="q-image' + imageCount + '">Question <span class="question-number">' + (++questionCount) + '</span> [drawing]</label>' +
+            '<label class="font-weight-bold" for="q-image' + imageCount + '">Otázka <span class="question-number">' + (++questionCount) + '</span> [nakreslenie obrázku]</label>' +
             '<input type="text" id="q-image' + imageCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
-            '<label for="points-image' + imageCount + '">Max points</label>' +
+            '<label for="points-image' + imageCount + '">Počet bodov</label>' +
             '<input id="points-image' + imageCount + '" type="number" min="1" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][points]">' +
             '</div>' +
             '<div class="col-1 d-flex justify-content-center"><i class="align-self-end pb-1 fas fa-2x fa-times-circle delete-question btn text-danger"></i></div>' +
@@ -222,11 +222,11 @@ $(function () {
             '<div class="question form-group row">' +
             '<input type="hidden" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][type]" value="expression">' +
             '<div class="col-9">' +
-            '<label class="font-weight-bold" for="q-expression' + expressionCount + '">Question <span class="question-number">' + (++questionCount) + '</span> [expression]</label>' +
+            '<label class="font-weight-bold" for="q-expression' + expressionCount + '">Otázka <span class="question-number">' + (++questionCount) + '</span> [matematický výraz]</label>' +
             '<input type="text" id="q-expression' + expressionCount + '" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][question]">' +
             '</div>' +
             '<div class="col-2">' +
-            '<label for="points-expression' + expressionCount + '">Max points</label>' +
+            '<label for="points-expression' + expressionCount + '">Počet bodov</label>' +
             '<input id="points-expression' + expressionCount + '" type="number" min="1" class="form-control" name="questions[' + (simpleCount + optionCount + pairCount + imageCount + expressionCount) + '][points]">' +
             '</div>' +
             '<div class="col-1 d-flex justify-content-center"><i class="align-self-end pb-1 fas fa-2x fa-times-circle delete-question btn text-danger"></i></div>' +

@@ -52,7 +52,7 @@ $controller->createStudentStatus($_SESSION['studentId'], $_SESSION['testCode']);
                         <span class="pl-2">[<?= $question['max_points'] ?>b]</span></label>
                     <select id="question<?= $question['id'] ?>" name="answers[option][<?= $question['id'] ?>]"
                             class="form-control" onchange='saveValue(this);'>
-                        <option selected disabled>Choose option</option>
+                        <option selected disabled>Vyber možnosť</option>
                         <?php foreach ($options as $option) : ?>
                             <option value="<?= $option['id'] ?>"><?= $option['value'] ?></option>
                         <?php endforeach; ?>
@@ -74,7 +74,7 @@ $controller->createStudentStatus($_SESSION['studentId'], $_SESSION['testCode']);
                                 <select id="question<?= $question['id'] ?>-<?= $pair['id'] ?>"
                                         name="answers[pair][<?= $question['id'] ?>][<?= $pair['id'] ?>]"
                                         class="form-control" aria-label="Select box" onchange='saveValue(this);'>
-                                    <option selected disabled>Choose corresponding option</option>
+                                    <option selected disabled>Vyber správnu možnosť</option>
                                     <?php foreach ($pairs['options'] as $option) : ?>
                                         <option value="<?= $option['id'] ?>"><?= $option['value'] ?></option>
                                     <?php endforeach; ?>

@@ -283,7 +283,7 @@ class TestController
             foreach ($answers[$type] as $questionId => $answer) {
                 $answerId = $this->createAnswer($submissionId, $questionId);
                 if ($type == 'image') {
-                    $answer = '/images/submissions/students/' . $studentId . '/question-' . $answer . '.png';
+                    $answer = '/images/submissions/students/' . $studentId . '/question-' . $questionId . '.png';
                 }
                 $this->createAnswerVariation($answerId, $type, $answer);
             }

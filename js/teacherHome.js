@@ -21,10 +21,10 @@ $(function () {
     }
 
     function updateContent(button, response) {
-        let icon = $(button).parent().prev().children().first();
+        let icon = $(button).parent().parent().parent().prev().children().first();
         if (parseInt(response)) {
             $(button).addClass('deactivate-test').removeClass('activate-test').removeClass('btn-success').addClass('btn-danger');
-            $(button).text('Deactivate');
+            $(button).text('Deaktivovať');
             $(button).attr('data-status', '0');
             icon.removeClass('text-danger')
                 .removeClass('fa-times-circle')
@@ -32,7 +32,7 @@ $(function () {
                 .addClass('fa-check-circle');
         } else {
             $(button).addClass('activate-test').removeClass('deactivate-test').removeClass('btn-danger').addClass('btn-success');
-            $(button).text('Activate');
+            $(button).text('Aktivovať');
             $(button).attr('data-status', '1');
             icon.removeClass('text-success')
                 .removeClass('fa-check-circle')
